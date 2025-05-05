@@ -1,13 +1,32 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/tvZJeQ95)
-# Name der App
+# 🌙 Sona  
+**Breathe & Balance**
 
-**Füge hier einen kurzen, knackigen Slogan ein, um deine App zu bewerben.**
+**Sona** ist eine moderne Meditations-App für Android, die Nutzer*innen zu mehr Achtsamkeit, Ruhe und innerer Balance begleitet.  
+In einer hektischen Welt schafft Sona einen digitalen Rückzugsort – mit beruhigender Musik, liebevoll gestaltetem Design und täglichen Impulsen für Körper und Geist.
 
-Beschreibe hier in ein paar Sätzen, was deine App bietet.
+---
 
-Für wen ist sie geeignet? Welches Problem löst sie? Was macht deine App anders/besser als andere Apps?
-Vermeide es, hier allzusehr in technische Details zu gehen.
+## Für wen ist sie geeignet?
 
+Sona richtet sich an alle, die bewusste Pausen suchen – ob im stressigen Schulalltag, in Lernphasen, während mentaler Tiefs oder einfach als tägliches Ritual.  
+Sie ist intuitiv nutzbar, funktioniert auch offline und ist komplett werbefrei.
+
+---
+
+## Welches Problem löst sie?
+
+Viele Meditations-Apps sind überladen, auf Abo-Modelle ausgerichtet oder setzen ständige Internetverbindung voraus.  
+**Sona** verzichtet bewusst auf all das: Kein Abo, keine Werbung, keine Überforderung. Nur du, deine Atmung – und ein ruhiger, klar strukturierter Ort.
+
+---
+
+## Was macht Sona anders?
+
+-  Hochwertige, freie Meditationsmusik lokal integriert (Chosic.com)
+-  Optionale tägliche Zitate aus einer API (ZenQuotes)
+-  Ästhetisches Design in beruhigenden Farben (Vintage White, Noble Red, Elegant Black)
+-  Minimalistisch, leichtgewichtig, 100 % Compose-basiert
 
 ## Design
 Füge hier am Ende die Screenshots deiner App ein.
@@ -19,34 +38,67 @@ Füge hier am Ende die Screenshots deiner App ein.
 </p>
 
 
-## Features
-Hier kommen alle Features rein, welche deine App bietet.
+##  Features
 
-**Tipp: Du kannst diese Punkte mit der Zeit abhaken, sodass am Ende eine vollständige Liste entsteht.**
+**Tipp:** Diese Liste wird regelmäßig erweitert und gepflegt.
 
-- [x] Feature 1
-- [x] Feature 2
-- [ ] ...
+- [x] Splashscreen mit animiertem Logo  
+- [x] Homescreen mit täglichen Empfehlungen  
+- [x] Navigationsstruktur mit BottomNavigation  
+- [x] Kategorien: Sleep, Focus, Breathe, Morning  
+- [x] Lokale Audio- und Bildintegration  
+- [x] Zitat des Tages über ZenQuotes API  
+- [ ] Favoritenfunktion mit DataStore oder Room  
+- [ ] Erinnerungsfunktion (optional)  
+- [ ] Offline-Download ganzer Playlists (optional)  
+- [ ] Profilverwaltung (optional)
 
+## ⚙️ Technischer Aufbau
 
-## Technischer Aufbau
+### Projektaufbau
 
-#### Projektaufbau
-Eine kurze Beschreibung deiner Ordnerstruktur und Architektur (MVVM, Repositories) um Außenstehenden zu helfen, sich in deinem Projekt zurecht zu finden.
+Die App folgt dem MVVM-Ansatz in einer modularen Compose-Architektur.
 
-#### Datenspeicherung
-Welche Daten speicherst du? Wo und wie (Firebase, Core Data)? Erkläre hier auch, warum du den jeweiligen Dienst nutzt (offline-first, Sync usw.).
+### Datenspeicherung
 
-#### API Calls
-Welche APIs verwendest du?
+Aktuell speichert Sona:
+- Audiodateien (lokal im `res/raw/`)
+- Bilder (lokal im `res/drawable/`)
+- Struktur-JSON (`assets/meditations.json`)
+- Später: Favoriten via Room oder DataStore
 
-#### 3rd-Party Frameworks
-Verwendest du Frameworks/Libraries, die nicht von dir stammen?
+📌 *Warum lokal?*  
+Die App ist auf **Offline-Nutzung optimiert** (kein Zwang zur Cloud), funktioniert stabil ohne Internet, ideal für Schüler*innen oder Fokuszeiten.
 
+---
 
-## Ausblick
-Beschreibe hier, wo die Reise nach deinem Praxisprojekt hin geht. Was möchtest du in Zukunft noch ergänzen?
+###  API Calls
 
-- [ ] Geplantes Feature 1
-- [ ] Geplantes Feature 2
-- [ ] ...
+- **ZenQuotes.io** → liefert inspirierende Tageszitate  
+  Beispiel-Call: `https://zenquotes.io/api/today`
+
+---
+
+### 3rd-Party Frameworks
+
+Folgende Libraries werden eingesetzt:
+- **Jetpack Compose** (UI)
+- **Koin** (Dependency Injection)
+- **Retrofit + Moshi** (API)
+- **Room / DataStore** (optional für Speicherung)
+- **Coil** (optional für Bild-Handling)
+- **Accompanist** (Navigation-Animations, System UI)
+
+---
+
+##  Ausblick
+
+- [ ] Favoriten-Logik und lokale Speicherung
+- [ ] Erinnerungsfunktion per Notification
+- [ ] Vollständiger Dark Mode mit Dynamik
+- [ ] Upload eigener Meditationen (nur lokal)
+- [ ] Erweiterung um Atemübungen mit Animation
+- [ ] Lokalisierung (Mehrsprachigkeit)
+- [ ] Veröffentlichung im Play Store
+
+🧘 *Sona ist mehr als eine App – es ist eine kleine digitale Pause vom Lärm der Welt.*
