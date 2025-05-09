@@ -24,7 +24,7 @@ Viele Meditations-Apps sind überladen, auf Abo-Modelle ausgerichtet oder setzen
 ## Was macht Sona anders?
 
 -  Hochwertige, freie Meditationsmusik lokal integriert (Chosic.com)
--  Optionale tägliche Zitate aus einer API (ZenQuotes)
+-  Optionale tägliche Zitate aus einer API (Typefit API)
 -  Ästhetisches Design in beruhigenden Farben (Vintage White, Noble Red, Elegant Black)
 -  Minimalistisch, leichtgewichtig, 100 % Compose-basiert
 
@@ -47,7 +47,7 @@ Füge hier am Ende die Screenshots deiner App ein.
 - [x] Navigationsstruktur mit BottomNavigation  
 - [x] Kategorien: Sleep, Focus, Breathe, Morning  
 - [x] Lokale Audio- und Bildintegration  
-- [x] Zitat des Tages über ZenQuotes API  
+- [x] Zitat des Tages über Typefit API  
 - [ ] Favoritenfunktion mit DataStore oder Room  
 - [ ] Erinnerungsfunktion (optional)  
 - [ ] Offline-Download ganzer Playlists (optional)  
@@ -74,9 +74,8 @@ Die App ist auf **Offline-Nutzung optimiert** (kein Zwang zur Cloud), funktionie
 
 ###  API Calls
 
-- **ZenQuotes.io** → liefert inspirierende Tageszitate  
-  Beispiel-Call: `https://zenquotes.io/api/today`
-
+- **type.fit** → liefert inspirierende Tageszitate  
+  url("https://type.fit/api/quotes"
 ---
 
 ### 3rd-Party Frameworks
