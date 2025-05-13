@@ -5,5 +5,6 @@ data class MeditationPose(
     val id: Int,
     val name: String,
     val description: String,
-    val imageRes: Int
+    val imageRes: Int,
+    val longDescription: String
 )

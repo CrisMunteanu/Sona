@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">InnerPeace</string>
+    <string name="settings">Einstellungen</string>
+    <string name="language">Sprache</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="reset_onboarding">Onboarding zurücksetzen</string>
+    <string name="get_started">Los gehts</string>
+    <string name="quote_gallery">Zitate-Galerie</string>
+    <string name="meditation_poses">Meditationsstellungen</string>
+    <string name="splash_quote">„Der Geist ist alles. Was du denkst, das wirst du.“ – Buddha</string>
+</resources>

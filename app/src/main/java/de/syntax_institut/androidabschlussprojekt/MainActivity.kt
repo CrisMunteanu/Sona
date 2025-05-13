@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.data.local.SettingsDataStore
@@ -15,81 +16,57 @@ import de.syntax_institut.androidabschlussprojekt.presentation.components.Bottom
 import de.syntax_institut.androidabschlussprojekt.presentation.navigation.AppNavigation
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.SonaTheme
 import kotlinx.coroutines.launch
-import androidx.compose.ui.platform.LocalContext
-import de.syntax_institut.androidabschlussprojekt.domain.util.setAppLocale
-import de.syntax_institut.androidabschlussprojekt.domain.util.LocalLocalizedContext
-
+import kotlinx.coroutines.runBlocking
+import java.util.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        // Sprache vor setContent setzen
+        val languageCode = runBlocking {
+            SettingsDataStore.getLanguageCode(applicationContext)
+        }
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
+
         setContent {
-            val baseContext = LocalContext.current
-            val scope = rememberCoroutineScope()
+            val context = LocalContext.current
             val navController = rememberNavController()
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
 
+            val scope = rememberCoroutineScope()
             var isDarkMode by remember { mutableStateOf(false) }
-            var currentLanguageCode by remember { mutableStateOf("de") }
 
-            // Dynamischer Sprach-Kontext (reagiert auf Sprachwechsel)
-            val localizedContext = remember(currentLanguageCode) {
-                baseContext.setAppLocale(currentLanguageCode)
-            }
-
-            // 🌙 & 🌍 Einstellungen beim Start laden
             LaunchedEffect(Unit) {
-                isDarkMode = SettingsDataStore.getDarkMode(baseContext)
-
-                val savedLanguage = SettingsDataStore.getLanguage(baseContext)
-                currentLanguageCode = when (savedLanguage) {
-                    "Englisch" -> "en"
-                    "Französisch" -> "fr"
-                    "Spanisch" -> "es"
-                    else -> "de"
-                }
-
-                baseContext.setAppLocale(currentLanguageCode) // optional, da lokalisiert unten
+                isDarkMode = SettingsDataStore.getDarkMode(context)
             }
 
-            CompositionLocalProvider(LocalLocalizedContext provides localizedContext) {
-
-                SonaTheme(darkTheme = isDarkMode) {
-                    Scaffold(
-                        bottomBar = {
-                            if (currentRoute in listOf("start", "home", "favorites", "pose_list", "settings")) {
-                                BottomBar(navController = navController)
-                            }
+            SonaTheme(darkTheme = isDarkMode) {
+                Scaffold(
+                    bottomBar = {
+                        if (currentRoute in listOf("start", "home", "favorites", "pose_list", "settings")) {
+                            BottomBar(navController = navController)
                         }
-                    ) { innerPadding ->
-                        AppNavigation(
-                            navController = navController,
-                            modifier = Modifier.padding(innerPadding),
-                            isDarkMode = isDarkMode,
-                            onToggleDarkMode = {
-                                isDarkMode = it
-                                scope.launch {
-                                    SettingsDataStore.saveDarkMode(baseContext, it)
-                                }
-                            },
-                            currentLanguageCode = currentLanguageCode,
-                            onLanguageChange = { newCode ->
-                                currentLanguageCode = newCode
-                                scope.launch {
-                                    val label = when (newCode) {
-                                        "en" -> "Englisch"
-                                        "fr" -> "Französisch"
-                                        "es" -> "Spanisch"
-                                        else -> "Deutsch"
-                                    }
-                                    SettingsDataStore.saveLanguage(baseContext, label)
-                                }
-                            }
-                        )
                     }
+                ) { innerPadding ->
+                    AppNavigation(
+                        navController = navController,
+                        modifier = Modifier.padding(innerPadding),
+                        isDarkMode = isDarkMode,
+                        onToggleDarkMode = {
+                            isDarkMode = it
+                            scope.launch {
+                                SettingsDataStore.saveDarkMode(context, it)
+                            }
+                        },
+
+                    )
                 }
             }
         }

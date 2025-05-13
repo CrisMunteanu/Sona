@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">InnerPeace</string>
+    <string name="settings">Settings</string>
+    <string name="language">Language</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="reset_onboarding">Reset Onboarding</string>
+    <string name="get_started">Get Started</string>
+    <string name="quote_gallery">Quote Gallery</string>
+    <string name="meditation_poses">Meditation Poses</string>
+    <string name="splash_quote">"The mind is everything. What you think you become." - Buddha</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">InnerPeace</string>
+    <string name="settings">Paramètres</string>
+    <string name="language">Langue</string>
+    <string name="dark_mode">Mode sombre</string>
+    <string name="reset_onboarding">Réinitialiser lintroduction</string>
+    <string name="get_started">Commencer</string>
+    <string name="quote_gallery">Galerie de citations</string>
+    <string name="meditation_poses">Postures de méditation</string>
+    <string name="splash_quote">« L’esprit est tout. Ce que tu penses, tu le deviens. » – Bouddha</string>
+</resources>

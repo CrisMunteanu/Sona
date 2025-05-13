@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">InnerPeace</string>
+    <string name="settings">Configuración</string>
+    <string name="language">Idioma</string>
+    <string name="dark_mode">Modo oscuro</string>
+    <string name="reset_onboarding">Restablecer introducción</string>
+    <string name="get_started">Comenzar</string>
+    <string name="quote_gallery">Galería de citas</string>
+    <string name="meditation_poses">Posturas de meditación</string>
+    <string name="splash_quote">« La mente lo es todo. En lo que piensas, te conviertes. » – Buda</string>
+</resources>

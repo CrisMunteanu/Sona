@@ -4,15 +4,18 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.domain.model.MeditationItem
 import de.syntax_institut.androidabschlussprojekt.domain.util.formatTime
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
@@ -175,5 +178,21 @@ fun AudioPlayerScreen(
             style = MaterialTheme.typography.labelLarge,
             color = SoftPurple,
         )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.logo_sona),
+                contentDescription = "Sona Logo",
+                modifier = Modifier
+                    .size(90.dp)
+                    .clip(CircleShape)
+            )
+        }
     }
 }

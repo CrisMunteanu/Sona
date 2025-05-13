@@ -24,9 +24,7 @@ fun AppNavigation(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     isDarkMode: Boolean,
-    onToggleDarkMode: (Boolean) -> Unit,
-    currentLanguageCode: String,
-    onLanguageChange: (String) -> Unit
+    onToggleDarkMode: (Boolean) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -95,8 +93,7 @@ fun AppNavigation(
             SettingsScreen(
                 isDarkMode = isDarkMode,
                 onToggleDarkMode = onToggleDarkMode,
-                currentLanguageCode = currentLanguageCode,
-                onLanguageChange = onLanguageChange
+
             )
         }
     }

@@ -18,19 +18,8 @@ object SettingsDataStore {
     private val LANGUAGE_KEY = stringPreferencesKey("language")
     private val DARK_MODE_KEY = booleanPreferencesKey("dark_mode")
 
-    // Sprache speichern
-    suspend fun saveLanguage(context: Context, language: String) {
-        context.settingsDataStore.edit { preferences ->
-            preferences[LANGUAGE_KEY] = language
-        }
-    }
 
-    // Sprache abrufen
-    suspend fun getLanguage(context: Context): String {
-        return context.settingsDataStore.data
-            .map { preferences -> preferences[LANGUAGE_KEY] ?: "Deutsch" }
-            .first()
-    }
+
 
     // Dark Mode speichern
     suspend fun saveDarkMode(context: Context, enabled: Boolean) {
@@ -55,9 +44,6 @@ object SettingsDataStore {
     }
 
 
-    suspend fun getLanguageBlocking(context: Context): String {
-        val prefs = context.dataStore.data.first()
-        return prefs[LANGUAGE_KEY] ?: "Deutsch"
-    }
+
 
 }
