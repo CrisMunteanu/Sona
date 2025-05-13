@@ -20,4 +20,22 @@
     <string name="onboard_title_3">Cest parti</string>
     <string name="onboard_desc_3">Ajoute des favoris, configure tes paramètres et commence ton voyage.</string>
     <string name="author_info_hint">Touchez l’auteur pour en savoir plus sur Wikipédia.</string>
+    <string name="mental_benefits_title">Bienfaits mentaux</string>
+    <string name="benefit_intro">La méditation régulière a un effet positif sur le bien-être mental. Voici quelques avantages clés :</string>
+    <string name="benefit_focus">🧠 Meilleure concentration</string>
+    <string name="benefit_focus_desc">La méditation aide à améliorer la concentration et à réduire les distractions.</string>
+    <string name="benefit_stress">😌 Moins de stress</string>
+    <string name="benefit_stress_desc">La respiration consciente réduit durablement le niveau de stress.</string>
+    <string name="benefit_sleep">🌙 Meilleur sommeil</string>
+    <string name="benefit_sleep_desc">La méditation calme lesprit et facilite lendormissement.</string>
+    <string name="benefit_emotions">❤️ Équilibre émotionnel</string>
+    <string name="benefit_emotions_desc">Vous apprenez à observer vos pensées et à mieux gérer vos émotions.</string>
+    <string name="benefit_awareness_title">Plus de pleine conscience</string>
+    <string name="benefit_awareness_desc">Vous apprenez à vivre pleinement le moment présent – ce qui renforce le bien-être et léquilibre intérieur.</string>
+    <string name="benefit_focus_title">Concentration améliorée</string>
+    <string name="benefit_stress_title">Réduction du stress</string>
+    <string name="benefit_sleep_title">Meilleur sommeil</string>
+    <string name="back">Retour</string>
+    <string name="go_to_start">Aller à laccueil</string>
+    <string name="learn_more_benefits">En savoir plus sur les bienfaits mentaux</string>
 </resources>

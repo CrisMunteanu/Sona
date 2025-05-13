@@ -25,5 +25,10 @@ val onboardingPages = listOf(
         imageRes = R.drawable.onboarding_ready,
         title = R.string.onboard_title_3,
         description = R.string.onboard_desc_3
+    ),
+    OnboardingPage(
+        imageRes = R.drawable.mental_benefits_header,
+        title = R.string.mental_benefits_title,
+        description = R.string.benefit_intro
     )
 )

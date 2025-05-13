@@ -20,4 +20,22 @@
     <string name="onboard_title_3">Get started</string>
     <string name="onboard_desc_3">Save your favorites, adjust your settings, and begin your journey.</string>
     <string name="author_info_hint">Tap the author to learn more on Wikipedia.</string>
+    <string name="mental_benefits_title">Mental Benefits</string>
+    <string name="benefit_intro">Regular meditation has a positive impact on your mental well-being. Here are some key benefits:</string>
+    <string name="benefit_focus">🧠 Improved Focus</string>
+    <string name="benefit_focus_desc">Meditation sharpens your attention and helps manage distractions better.</string>
+    <string name="benefit_stress">😌 Reduced Stress</string>
+    <string name="benefit_stress_desc">Mindful breathing and stillness significantly lower your stress levels.</string>
+    <string name="benefit_sleep">🌙 Better Sleep</string>
+    <string name="benefit_sleep_desc">Meditation calms your mind and makes falling asleep easier.</string>
+    <string name="benefit_emotions">❤️ Emotional Balance</string>
+    <string name="benefit_emotions_desc">You learn to observe thoughts and become more aware of your emotions.</string>
+    <string name="benefit_awareness_title">Greater Mindfulness</string>
+    <string name="benefit_awareness_desc">You learn to be fully present in the moment – boosting well-being and inner balance.</string>
+    <string name="benefit_focus_title">Improved Focus</string>
+    <string name="benefit_stress_title">Stress Reduction</string>
+    <string name="benefit_sleep_title">Better Sleep</string>
+    <string name="back">Back</string>
+    <string name="go_to_start">Go to Start</string>
+    <string name="learn_more_benefits">Mehr über mentale Vorteile</string>
 </resources>

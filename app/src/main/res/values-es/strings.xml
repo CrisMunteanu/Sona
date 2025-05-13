@@ -20,5 +20,22 @@
     <string name="onboard_title_3">¡Empezar!</string>
     <string name="onboard_desc_3">Marca tus favoritos, ajusta la configuración y comienza tu viaje.</string>
     <string name="author_info_hint">Toca el autor para saber más en Wikipedia.</string>
-
+    <string name="mental_benefits_title">Beneficios mentales</string>
+    <string name="benefit_intro">La meditación regular mejora tu bienestar mental. Aquí algunos beneficios clave:</string>
+    <string name="benefit_focus">🧠 Mejor concentración</string>
+    <string name="benefit_focus_desc">La meditación mejora tu enfoque y reduce las distracciones.</string>
+    <string name="benefit_stress">😌 Menos estrés</string>
+    <string name="benefit_stress_desc">La respiración consciente y la calma interior reducen el estrés.</string>
+    <string name="benefit_sleep">🌙 Mejor sueño</string>
+    <string name="benefit_sleep_desc">La meditación relaja la mente y facilita el sueño.</string>
+    <string name="benefit_emotions">❤️ Mayor equilibrio emocional</string>
+    <string name="benefit_emotions_desc">Aprendes a observar tus pensamientos y a gestionar mejor tus emociones.</string>
+    <string name="benefit_awareness_title">Mayor consciencia</string>
+    <string name="benefit_awareness_desc">Aprendes a vivir el momento presente – lo que aumenta tu bienestar y equilibrio interior.</string>
+    <string name="benefit_focus_title">Mejor concentración</string>
+    <string name="benefit_stress_title">Reducción del estrés</string>
+    <string name="benefit_sleep_title">Mejor sueño</string>
+    <string name="back">Atrás</string>
+    <string name="go_to_start">Ir al inicio</string>
+    <string name="learn_more_benefits">Más sobre los beneficios mentales</string>
 </resources>

@@ -8,17 +8,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.presentation.screens.start.CategoryStartScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.favorites.FavoritesScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.home.HomeScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.info.MentalBenefitsDetailScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.info.MentalBenefitsScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.onboarding.OnboardingScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.player.AudioPlayerScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.pose.MeditationPoseDetailScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.pose.MeditationPoseListScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.quotes.QuoteDetailScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.quotes.QuotesGalleryScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.settings.SettingsScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.splash.SplashScreen
-import de.syntax_institut.androidabschlussprojekt.presentation.screens.quotes.QuoteDetailScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.start.CategoryStartScreen
 
 @Composable
 fun AppNavigation(
@@ -37,11 +39,15 @@ fun AppNavigation(
         }
 
         composable("onboarding") {
-            OnboardingScreen {
-                navController.navigate("start") {
-                    popUpTo("onboarding") { inclusive = true }
-                }
-            }
+            OnboardingScreen(navController)
+        }
+
+        composable("mental_benefits") {
+            MentalBenefitsScreen(navController)
+        }
+
+        composable("mental_benefits_detail") {
+            MentalBenefitsDetailScreen(navController)
         }
 
         composable("start") {
@@ -65,10 +71,22 @@ fun AppNavigation(
         }
 
         composable(
+            route = "quote_detail/{quoteText}/{quoteAuthor}",
+            arguments = listOf(
+                navArgument("quoteText") { type = NavType.StringType },
+                navArgument("quoteAuthor") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val quoteText = backStackEntry.arguments?.getString("quoteText") ?: ""
+            val quoteAuthor = backStackEntry.arguments?.getString("quoteAuthor") ?: ""
+            QuoteDetailScreen(quoteText = quoteText, quoteAuthor = quoteAuthor)
+        }
+
+        composable(
             route = "player/{fileName}/{imageResId}",
             arguments = listOf(
-                navArgument("fileName") { defaultValue = "sleep_peaceful1.mp3" },
-                navArgument("imageResId") { defaultValue = R.drawable.sleep1 }
+                navArgument("fileName") { type = NavType.StringType },
+                navArgument("imageResId") { type = NavType.IntType }
             )
         ) { backStackEntry ->
             val fileName = backStackEntry.arguments?.getString("fileName") ?: "sleep_peaceful1.mp3"
@@ -84,7 +102,9 @@ fun AppNavigation(
 
         composable(
             route = "pose_detail/{poseId}",
-            arguments = listOf(navArgument("poseId") { type = NavType.IntType })
+            arguments = listOf(
+                navArgument("poseId") { type = NavType.IntType }
+            )
         ) { backStackEntry ->
             val poseId = backStackEntry.arguments?.getInt("poseId") ?: -1
             MeditationPoseDetailScreen(poseId = poseId)
@@ -93,22 +113,8 @@ fun AppNavigation(
         composable("settings") {
             SettingsScreen(
                 isDarkMode = isDarkMode,
-                onToggleDarkMode = onToggleDarkMode,
-
+                onToggleDarkMode = onToggleDarkMode
             )
         }
-        composable(
-            route = "quote_detail/{quoteText}/{quoteAuthor}",
-            arguments = listOf(
-                navArgument("quoteText") { type = NavType.StringType },
-                navArgument("quoteAuthor") { type = NavType.StringType }
-            )
-        ) { backStackEntry ->
-            val text = backStackEntry.arguments?.getString("quoteText") ?: ""
-            val author = backStackEntry.arguments?.getString("quoteAuthor") ?: ""
-            QuoteDetailScreen(quoteText = text, quoteAuthor = author)
-        }
-
-
     }
 }
