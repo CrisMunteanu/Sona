@@ -1,5 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.quotes
 
+import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
@@ -20,6 +23,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun QuotesGalleryScreen(
+    navController: NavController,
     viewModel: MainViewModel = koinViewModel()
 ) {
     val quotes by viewModel.quotes.collectAsState()
@@ -58,7 +62,9 @@ fun QuotesGalleryScreen(
                     )
                 ) {
                     Column(
-                        modifier = Modifier.padding(20.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(20.dp),
                         horizontalAlignment = Alignment.Start
                     ) {
                         Text(
@@ -67,12 +73,20 @@ fun QuotesGalleryScreen(
                             fontSize = 18.sp,
                             style = MaterialTheme.typography.bodyLarge
                         )
+
                         Spacer(modifier = Modifier.height(8.dp))
+
                         Text(
                             text = "- ${quote.author}",
                             color = OceanBlue.copy(alpha = 0.9f),
                             fontSize = 16.sp,
-                            style = MaterialTheme.typography.labelMedium
+                            style = MaterialTheme.typography.labelMedium,
+                            modifier = Modifier.clickable {
+
+                                val encodedText = Uri.encode(quote.text)
+                                val encodedAuthor = Uri.encode(quote.author)
+                                navController.navigate("quote_detail/$encodedText/$encodedAuthor")
+                            }
                         )
                     }
                 }

@@ -11,4 +11,13 @@
     <string name="splash_quote">« L’esprit est tout. Ce que tu penses, tu le deviens. » – Bouddha</string>
     <string name="welcome">Bienvenue</string>
     <string name="onboarding_text">Trouvez votre paix intérieure grâce à des méditations guidées et des citations inspirantes.</string>
+    <string name="onboard_title_1">Trouve ta paix intérieure</string>
+    <string name="onboard_desc_1">Découvre des méditations guidées pour plus de sérénité au quotidien.</string>
+
+    <string name="onboard_title_2">Écoute et détends-toi</string>
+    <string name="onboard_desc_2">Choisis des sons apaisants et relaxants pour ton bien-être mental.</string>
+
+    <string name="onboard_title_3">Cest parti</string>
+    <string name="onboard_desc_3">Ajoute des favoris, configure tes paramètres et commence ton voyage.</string>
+    <string name="author_info_hint">Touchez l’auteur pour en savoir plus sur Wikipédia.</string>
 </resources>

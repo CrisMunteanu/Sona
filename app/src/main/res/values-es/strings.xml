@@ -11,4 +11,14 @@
     <string name="splash_quote">« La mente lo es todo. En lo que piensas, te conviertes. » – Buda</string>
     <string name="welcome">Bienvenido</string>
     <string name="onboarding_text">Encuentra tu paz interior con meditaciones guiadas y citas inspiradoras.</string>
+    <string name="onboard_title_1">Encuentra tu paz</string>
+    <string name="onboard_desc_1">Descubre meditaciones guiadas para una vida más tranquila.</string>
+
+    <string name="onboard_title_2">Escucha y relájate</string>
+    <string name="onboard_desc_2">Elige sonidos calmantes y música para encontrar serenidad interior.</string>
+
+    <string name="onboard_title_3">¡Empezar!</string>
+    <string name="onboard_desc_3">Marca tus favoritos, ajusta la configuración y comienza tu viaje.</string>
+    <string name="author_info_hint">Toca el autor para saber más en Wikipedia.</string>
+
 </resources>

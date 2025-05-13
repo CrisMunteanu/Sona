@@ -35,12 +35,16 @@ fun SplashScreen(navController: NavController) {
     val context = LocalContext.current
     var logoVisible by remember { mutableStateOf(false) }
 
+    // Entscheidet nach Splash-Dauer ob Onboarding oder Start
     LaunchedEffect(Unit) {
         logoVisible = true
         delay(2500)
 
         val hasSeenOnboarding = SettingsDataStore.getOnboardingSeen(context)
-        navController.navigate(if (hasSeenOnboarding) "start" else "onboarding") {
+
+        navController.navigate(
+            if (hasSeenOnboarding) "start" else "onboarding"
+        ) {
             popUpTo("splash") { inclusive = true }
         }
     }
@@ -56,6 +60,7 @@ fun SplashScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            // Logo mit animierter Sichtbarkeit
             AnimatedVisibility(
                 visible = logoVisible,
                 enter = fadeIn(tween(1000)),
@@ -97,6 +102,7 @@ fun SplashScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Zitat einblenden
             AnimatedVisibility(
                 visible = logoVisible,
                 enter = fadeIn(tween(1500)),
@@ -111,6 +117,7 @@ fun SplashScreen(navController: NavController) {
                 )
             }
 
+            // Debug-Hinweis (nur sichtbar in BuildConfig.DEBUG)
             if (BuildConfig.DEBUG) {
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(

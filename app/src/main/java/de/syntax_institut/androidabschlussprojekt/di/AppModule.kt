@@ -28,7 +28,7 @@ val appModule = module {
         ).fallbackToDestructiveMigration().build()
     }
 
-    // ❤DAO & FavoritesRepository
+    // DAO & FavoritesRepository
     single { get<AppDatabase>().favoriteDao() }
     single { FavoritesRepository(get()) }
 

@@ -11,4 +11,13 @@
     <string name="splash_quote">„Der Geist ist alles. Was du denkst, das wirst du.“ – Buddha</string>
     <string name="welcome">Willkommen</string>
     <string name="onboarding_text">Finde deine innere Ruhe mit geführten Meditationen und inspirierenden Zitaten.</string>
+    <string name="onboard_title_1">Finde deine Ruhe</string>
+    <string name="onboard_desc_1">Erlebe geführte Meditationen für mehr Gelassenheit im Alltag.</string>
+
+    <string name="onboard_title_2">Höre Entspannung</string>
+    <string name="onboard_desc_2">Wähle beruhigende Klänge und Sounds für deinen inneren Frieden.</string>
+
+    <string name="onboard_title_3">Los gehts</string>
+    <string name="onboard_desc_3">Markiere Favoriten, speichere Einstellungen und beginne deine Reise.</string>
+    <string name="author_info_hint">Tippe auf den Autor, um mehr bei Wikipedia zu erfahren.</string>
 </resources>

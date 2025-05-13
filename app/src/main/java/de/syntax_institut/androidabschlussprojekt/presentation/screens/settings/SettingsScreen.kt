@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.data.local.OnboardingPreferences
 import de.syntax_institut.androidabschlussprojekt.data.local.SettingsDataStore
 import de.syntax_institut.androidabschlussprojekt.domain.util.setLocaleAndRestart
 import kotlinx.coroutines.launch
@@ -99,7 +98,8 @@ fun SettingsScreen(
         Button(
             onClick = {
                 scope.launch {
-                    OnboardingPreferences.resetOnboardingSeen(context)
+                    SettingsDataStore.setOnboardingSeen(context, false)
+                    activity?.recreate() // App neu starten, damit SplashScreen reagiert
                 }
             },
             modifier = Modifier.fillMaxWidth()

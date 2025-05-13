@@ -11,5 +11,13 @@
     <string name="splash_quote">"The mind is everything. What you think you become." - Buddha</string>
     <string name="welcome">Welcome</string>
     <string name="onboarding_text">Find your inner peace with guided meditations and inspiring quotes.</string>
+    <string name="onboard_title_1">Find your peace</string>
+    <string name="onboard_desc_1">Discover guided meditations to bring calm into your everyday life.</string>
 
+    <string name="onboard_title_2">Listen and relax</string>
+    <string name="onboard_desc_2">Choose calming sounds and peaceful music to soothe your mind.</string>
+
+    <string name="onboard_title_3">Get started</string>
+    <string name="onboard_desc_3">Save your favorites, adjust your settings, and begin your journey.</string>
+    <string name="author_info_hint">Tap the author to learn more on Wikipedia.</string>
 </resources>

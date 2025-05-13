@@ -18,6 +18,7 @@ import de.syntax_institut.androidabschlussprojekt.presentation.screens.pose.Medi
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.quotes.QuotesGalleryScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.settings.SettingsScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.splash.SplashScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.quotes.QuoteDetailScreen
 
 @Composable
 fun AppNavigation(
@@ -60,7 +61,7 @@ fun AppNavigation(
         }
 
         composable("quotes") {
-            QuotesGalleryScreen()
+            QuotesGalleryScreen(navController)
         }
 
         composable(
@@ -96,5 +97,18 @@ fun AppNavigation(
 
             )
         }
+        composable(
+            route = "quote_detail/{quoteText}/{quoteAuthor}",
+            arguments = listOf(
+                navArgument("quoteText") { type = NavType.StringType },
+                navArgument("quoteAuthor") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val text = backStackEntry.arguments?.getString("quoteText") ?: ""
+            val author = backStackEntry.arguments?.getString("quoteAuthor") ?: ""
+            QuoteDetailScreen(quoteText = text, quoteAuthor = author)
+        }
+
+
     }
 }
