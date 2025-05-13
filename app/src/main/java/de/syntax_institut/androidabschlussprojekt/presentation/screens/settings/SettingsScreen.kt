@@ -1,28 +1,21 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.settings
 
 import android.app.Activity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.OnboardingPreferences
 import de.syntax_institut.androidabschlussprojekt.data.local.SettingsDataStore
 import de.syntax_institut.androidabschlussprojekt.domain.util.setLocaleAndRestart
@@ -33,13 +26,6 @@ fun SettingsScreen(
     isDarkMode: Boolean,
     onToggleDarkMode: (Boolean) -> Unit
 ) {
-    val languageOptions = listOf(
-        "Deutsch" to "de",
-        "Englisch" to "en",
-        "Französisch" to "fr",
-        "Spanisch" to "es"
-    )
-
     val context = LocalContext.current
     val activity = context as? Activity
     val scope = rememberCoroutineScope()
@@ -50,7 +36,12 @@ fun SettingsScreen(
         selectedLanguageCode = SettingsDataStore.getLanguageCode(context)
     }
 
-
+    val emojiLanguages = listOf(
+        "🇩🇪" to "de",
+        "🇬🇧" to "en",
+        "🇫🇷" to "fr",
+        "🇪🇸" to "es"
+    )
 
     Column(
         modifier = Modifier
@@ -59,36 +50,46 @@ fun SettingsScreen(
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Text(
-            text = "Einstellungen",
+            text = stringResource(R.string.settings),
             style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp)
         )
 
-        Text("Sprache", fontSize = 18.sp)
-        languageOptions.forEach { (label, code) ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        scope.launch {
-                            SettingsDataStore.saveLanguageCode(context, code)
-                            activity?.let { setLocaleAndRestart(it, code) }
-                        }
-                    }
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = label)
-                if (selectedLanguageCode == code) {
-                    Text("✓", color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.language), fontSize = 18.sp)
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            emojiLanguages.forEach { (emoji, code) ->
+                Box(
+                    modifier = Modifier
+                        .size(54.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if (selectedLanguageCode == code)
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                            else
+                                Color.Transparent
+                        )
+                        .clickable {
+                            scope.launch {
+                                SettingsDataStore.saveLanguageCode(context, code)
+                                activity?.let { setLocaleAndRestart(it, code) }
+                            }
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = emoji, fontSize = 28.sp)
                 }
             }
         }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Dark Mode", fontSize = 18.sp)
+            Text(stringResource(R.string.dark_mode), fontSize = 18.sp)
             Switch(
                 checked = isDarkMode,
                 onCheckedChange = onToggleDarkMode
@@ -103,7 +104,7 @@ fun SettingsScreen(
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Onboarding zurücksetzen")
+            Text(stringResource(R.string.reset_onboarding))
         }
     }
 }

@@ -1,20 +1,23 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.onboarding
 
+import android.app.Activity
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import de.syntax_institut.androidabschlussprojekt.data.local.OnboardingPreferences
+import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.data.local.SettingsDataStore
+import de.syntax_institut.androidabschlussprojekt.domain.util.setLocaleAndRestart
 import kotlinx.coroutines.launch
 
 @Composable
 fun OnboardingScreen(
-    onContinue: () -> Unit
+    onFinish: () -> Unit // ✅ Jetzt korrekt eingebunden
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -27,33 +30,29 @@ fun OnboardingScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Willkommen bei Sona",
-            style = MaterialTheme.typography.headlineMedium.copy(
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
-            )
+            text = stringResource(R.string.welcome),
+            style = MaterialTheme.typography.titleLarge.copy(fontSize = 26.sp)
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Finde deine innere Ruhe mit geführten Meditationen\nund inspirierenden Zitaten.",
+            text = stringResource(R.string.onboarding_text),
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(horizontal = 16.dp),
-            lineHeight = 22.sp
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         Button(
             onClick = {
                 scope.launch {
-                    OnboardingPreferences.setOnboardingSeen(context)
-                    onContinue()
+                    SettingsDataStore.setOnboardingSeen(context, true)
                 }
+                onFinish() // ✅ Führt zur "start"-Navigation
             }
         ) {
-            Text("Los geht’s")
+            Text(stringResource(R.string.get_started))
         }
     }
 }

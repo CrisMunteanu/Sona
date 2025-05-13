@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -26,16 +27,20 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import de.syntax_institut.androidabschlussprojekt.BuildConfig
 import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.data.local.SettingsDataStore
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavController) {
+    val context = LocalContext.current
     var logoVisible by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         logoVisible = true
         delay(2500)
-        navController.navigate("onboarding") {
+
+        val hasSeenOnboarding = SettingsDataStore.getOnboardingSeen(context)
+        navController.navigate(if (hasSeenOnboarding) "start" else "onboarding") {
             popUpTo("splash") { inclusive = true }
         }
     }

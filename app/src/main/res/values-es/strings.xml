@@ -9,4 +9,6 @@
     <string name="quote_gallery">Galería de citas</string>
     <string name="meditation_poses">Posturas de meditación</string>
     <string name="splash_quote">« La mente lo es todo. En lo que piensas, te conviertes. » – Buda</string>
+    <string name="welcome">Bienvenido</string>
+    <string name="onboarding_text">Encuentra tu paz interior con meditaciones guiadas y citas inspiradoras.</string>
 </resources>

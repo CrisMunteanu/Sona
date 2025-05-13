@@ -9,4 +9,6 @@
     <string name="quote_gallery">Zitate-Galerie</string>
     <string name="meditation_poses">Meditationsstellungen</string>
     <string name="splash_quote">„Der Geist ist alles. Was du denkst, das wirst du.“ – Buddha</string>
+    <string name="welcome">Willkommen</string>
+    <string name="onboarding_text">Finde deine innere Ruhe mit geführten Meditationen und inspirierenden Zitaten.</string>
 </resources>

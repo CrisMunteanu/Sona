@@ -38,7 +38,7 @@ fun AppNavigation(
         composable("onboarding") {
             OnboardingScreen {
                 navController.navigate("start") {
-                    popUpTo("splash") { inclusive = true }
+                    popUpTo("onboarding") { inclusive = true }
                 }
             }
         }

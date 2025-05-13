@@ -9,4 +9,7 @@
     <string name="quote_gallery">Quote Gallery</string>
     <string name="meditation_poses">Meditation Poses</string>
     <string name="splash_quote">"The mind is everything. What you think you become." - Buddha</string>
+    <string name="welcome">Welcome</string>
+    <string name="onboarding_text">Find your inner peace with guided meditations and inspiring quotes.</string>
+
 </resources>

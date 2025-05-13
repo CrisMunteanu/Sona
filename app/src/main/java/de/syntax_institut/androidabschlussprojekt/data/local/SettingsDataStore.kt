@@ -17,7 +17,19 @@ object SettingsDataStore {
 
     private val LANGUAGE_KEY = stringPreferencesKey("language")
     private val DARK_MODE_KEY = booleanPreferencesKey("dark_mode")
+    private val ONBOARDING_SEEN_KEY = booleanPreferencesKey("onboarding_seen")
 
+    suspend fun setOnboardingSeen(context: Context, seen: Boolean) {
+        context.settingsDataStore.edit { prefs ->
+            prefs[ONBOARDING_SEEN_KEY] = seen
+        }
+    }
+
+    suspend fun getOnboardingSeen(context: Context): Boolean {
+        return context.settingsDataStore.data
+            .map { it[ONBOARDING_SEEN_KEY] ?: false }
+            .first()
+    }
 
 
 

@@ -9,4 +9,6 @@
     <string name="quote_gallery">Galerie de citations</string>
     <string name="meditation_poses">Postures de méditation</string>
     <string name="splash_quote">« L’esprit est tout. Ce que tu penses, tu le deviens. » – Bouddha</string>
+    <string name="welcome">Bienvenue</string>
+    <string name="onboarding_text">Trouvez votre paix intérieure grâce à des méditations guidées et des citations inspirantes.</string>
 </resources>
