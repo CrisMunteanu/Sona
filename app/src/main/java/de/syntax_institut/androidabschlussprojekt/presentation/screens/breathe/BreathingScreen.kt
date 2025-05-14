@@ -28,7 +28,7 @@ fun BreathingScreen() {
     var timeElapsed by remember { mutableStateOf(0) }
     var soundEnabled by remember { mutableStateOf(true) }
 
-    // 🕒 Auswahlbare Dauer (in Sekunden)
+    // Auswahlbare Dauer (in Sekunden)
     val durationOptions = listOf(60, 180, 300)
     var selectedDuration by remember { mutableStateOf(durationOptions[0]) }
     var expanded by remember { mutableStateOf(false) }
