@@ -33,10 +33,5 @@ val appModule = module {
     single { FavoritesRepository(get()) }
 
     // ViewModel
-    viewModel {
-        MainViewModel(
-            favoritesRepository = get(),
-            quoteRepository = get()
-        )
-    }
+    viewModel { MainViewModel(get(), get()) }
 }

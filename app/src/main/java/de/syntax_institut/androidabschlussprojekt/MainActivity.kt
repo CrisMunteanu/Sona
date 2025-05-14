@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Sprache vor setContent setzen
+
         val languageCode = runBlocking {
             SettingsDataStore.getLanguageCode(applicationContext)
         }

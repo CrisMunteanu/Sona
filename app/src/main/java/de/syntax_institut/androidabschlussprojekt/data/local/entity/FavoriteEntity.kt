@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "favorites")
 data class FavoriteEntity(
-    @PrimaryKey val audioFile: String, // eindeutig
+    @PrimaryKey val audioFile: String,
     val title: String,
     val imageResId: Int,
     val duration: String

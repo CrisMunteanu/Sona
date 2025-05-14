@@ -27,7 +27,7 @@ fun BottomBar(navController: NavController) {
             BottomNavItem.Home,
             BottomNavItem.Favorites,
             BottomNavItem.Poses,
-            BottomNavItem.Settings // ✅ NEU
+            BottomNavItem.Settings
         ).forEach { item ->
             val isSelected = currentRoute == item.route
 
