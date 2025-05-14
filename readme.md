@@ -32,9 +32,13 @@ Viele Meditations-Apps sind überladen, auf Abo-Modelle ausgerichtet oder setzen
 Füge hier am Ende die Screenshots deiner App ein.
 
 <p>
-  <img src="./img/screen1.png" width="200">
-  <img src="./img/screen2.png" width="200">
-  <img src="./img/screen3.png" width="200">
+  <img src="./img/SplashScreen.png" width="200">
+  <img src="./img/Onboarding%204.png" width="200">
+  <img src="./img/StartScreen.png" width="200">
+   <img src="./img/AudioPlayer.png" width="200">
+  <img src="./img/Pose.png" width="200">
+  <img src="./img/PosenScreen.png" width="200">
+   
 </p>
 
 
