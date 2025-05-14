@@ -12,6 +12,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.NobleBlack
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
 
 @Composable
@@ -31,7 +32,7 @@ fun BreathingCircleWithLogo(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    color = SoftPurple,
+                    color = NobleBlack,
                     shape = CircleShape
                 )
         )
@@ -41,7 +42,7 @@ fun BreathingCircleWithLogo(
             painter = painterResource(id = logoRes),
             contentDescription = "Sona Logo",
             modifier = Modifier
-                .size(100.dp * animatedScale)
+                .size(170.dp * animatedScale)
                 .clip(CircleShape)
         )
     }
