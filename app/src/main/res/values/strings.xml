@@ -38,4 +38,7 @@
     <string name="back">Back</string>
     <string name="go_to_start">Go to Start</string>
     <string name="learn_more_benefits">Mehr über mentale Vorteile</string>
+    <string name="breathe_in">Einatmen</string>
+    <string name="breathe_out">Ausatmen</string>
+    <string name="hold_breath">Halten</string>
 </resources>

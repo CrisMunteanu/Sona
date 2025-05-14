@@ -21,6 +21,7 @@ import de.syntax_institut.androidabschlussprojekt.presentation.screens.quotes.Qu
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.settings.SettingsScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.splash.SplashScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.start.CategoryStartScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.breathe.BreathingScreen
 
 @Composable
 fun AppNavigation(
@@ -116,5 +117,11 @@ fun AppNavigation(
                 onToggleDarkMode = onToggleDarkMode
             )
         }
+        // ganz unten innerhalb von NavHost hinzufügen:
+
+        composable("breathing") {
+            BreathingScreen()
+        }
+
     }
 }
