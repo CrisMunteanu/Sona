@@ -17,7 +17,6 @@ import androidx.navigation.NavController
 import de.syntax_institut.androidabschlussprojekt.presentation.components.MeditationCard
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.NobleBlack
-import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MainViewModel
 import org.koin.androidx.compose.koinViewModel
