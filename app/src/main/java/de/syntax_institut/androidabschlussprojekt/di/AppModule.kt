@@ -4,6 +4,7 @@ import androidx.room.Room
 import de.syntax_institut.androidabschlussprojekt.data.local.AppDatabase
 import de.syntax_institut.androidabschlussprojekt.data.repository.FavoritesRepository
 import de.syntax_institut.androidabschlussprojekt.data.repository.QuoteRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.ZenQuotesRepository
 import de.syntax_institut.androidabschlussprojekt.domain.remote.client.QuoteApiClient
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MainViewModel
 import org.koin.android.ext.koin.androidApplication
@@ -13,25 +14,37 @@ import org.koin.dsl.module
 
 val appModule = module {
 
-    // API-Client für type.fit mit Fallback auf lokale JSON-Datei
-    single { QuoteApiClient(context = androidContext()) }
-
-    // Zitat-Repository
-    single { QuoteRepository(client = get()) }
-
     // Room-Datenbank
     single {
         Room.databaseBuilder(
             androidApplication(),
             AppDatabase::class.java,
             "sona_db"
-        ).fallbackToDestructiveMigration().build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
-    // DAO & FavoritesRepository
+    // DAO
     single { get<AppDatabase>().favoriteDao() }
+
+    // API-Client für type.fit (Quote Gallery)
+    single { QuoteApiClient(context = androidContext()) }
+
+    // Repository für die Quote Gallery (type.fit)
+    single { QuoteRepository(client = get()) }
+
+    // Repository für ZenQuotes API (AudioPlayerScreen)
+    single { ZenQuotesRepository() }
+
+    // Favoriten-Repository
     single { FavoritesRepository(get()) }
 
-    // ViewModel
-    viewModel { MainViewModel(get(), get()) }
+    // MainViewModel mit allen Abhängigkeiten
+    viewModel {
+        MainViewModel(
+            favoritesRepository = get(),
+            quoteRepository = get(),
+            zenQuotesRepository = get() // hier = ZenQuotesRepository
+        )
+    }
 }

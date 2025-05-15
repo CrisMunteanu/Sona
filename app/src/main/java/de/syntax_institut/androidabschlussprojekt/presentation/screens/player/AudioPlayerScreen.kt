@@ -19,7 +19,7 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.domain.model.MeditationItem
 import de.syntax_institut.androidabschlussprojekt.domain.util.formatTime
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
-import  de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MainViewModel
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
@@ -44,19 +44,21 @@ fun AudioPlayerScreen(
 
     val currentItem = MeditationItem(title, imageResId, fileName, "")
 
+    // Favoritenstatus beobachten
     val isFavorite by produceState(initialValue = false, key1 = currentItem) {
         value = viewModel.isFavorite(currentItem)
     }
 
-    LaunchedEffect(currentItem.title) {
-        viewModel.loadQuoteForCategory(currentItem.title)
+    // Zitat aus ZenQuotes laden
+    val quote by viewModel.playerQuote.collectAsState()
+
+    // Bei Audio-Wechsel: Zitat neu laden
+    LaunchedEffect(fileName) {
+        viewModel.loadPlayerQuote()
     }
 
-    val quote by viewModel.quote.collectAsState()
-
+    // MediaPlayer initialisieren
     DisposableEffect(fileName) {
-
-
         val player = MediaPlayer().apply {
             setAudioAttributes(
                 AudioAttributes.Builder()
@@ -73,6 +75,7 @@ fun AudioPlayerScreen(
         onDispose { player.release() }
     }
 
+    // Fortschritt aktualisieren
     LaunchedEffect(isPlaying) {
         while (isPlaying && !userSeeking) {
             delay(500L)
@@ -80,6 +83,7 @@ fun AudioPlayerScreen(
         }
     }
 
+    // UI
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -96,6 +100,7 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Titel + Favorit
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -117,6 +122,7 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Fortschrittsbalken
         Slider(
             value = currentPosition.toFloat(),
             onValueChange = {
@@ -143,6 +149,7 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Play/Pause Button
         IconButton(onClick = {
             mediaPlayer?.let {
                 if (isPlaying) it.pause() else it.start()
@@ -159,6 +166,7 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        // Zitat-Anzeige
         quote?.let {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
@@ -176,14 +184,14 @@ fun AudioPlayerScreen(
         } ?: Text(
             text = "Lade Zitat...",
             style = MaterialTheme.typography.labelLarge,
-            color = SoftPurple,
+            color = SoftPurple
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        // Logo
         Box(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
             Image(
