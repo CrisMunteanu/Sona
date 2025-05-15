@@ -4,17 +4,15 @@ import android.media.MediaMetadataRetriever
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -57,21 +55,33 @@ fun FavoriteCard(
         elevation = CardDefaults.cardElevation(6.dp)
     ) {
         Row(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Rundes Bild mit fester Größe und Abstand
             Image(
                 painter = painterResource(id = item.imageResId),
                 contentDescription = item.title,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(80.dp)
-                    .padding(end = 12.dp)
+                    .clip(CircleShape)
             )
-            Column(modifier = Modifier.weight(1f)) {
+
+            Spacer(modifier = Modifier.width(16.dp)) // Abstand zwischen Bild und Text
+
+            // Textbereich
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center
+            ) {
                 Text(
                     text = item.title,
                     style = MaterialTheme.typography.titleMedium,
-                    color = NobleBlack
+                    color = NobleBlack,
+                    maxLines = 1 // optional für einzeilige Titel
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
@@ -81,6 +91,7 @@ fun FavoriteCard(
                 )
             }
 
+            // Favoriten-Icon
             Icon(
                 imageVector = Icons.Filled.Favorite,
                 contentDescription = "Favorit",

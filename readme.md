@@ -51,7 +51,7 @@ Füge hier am Ende die Screenshots deiner App ein.
 - [x] Navigationsstruktur mit BottomNavigation  
 - [x] Kategorien: Sleep, Focus, Breathe, Morning  
 - [x] Lokale Audio- und Bildintegration  
-- [x] Zitat des Tages über Typefit API  
+- [x] Zitat des Tages über Typefit API  und zenQuotes public API
 - [ ] Favoritenfunktion mit DataStore oder Room  
 - [ ] Erinnerungsfunktion (optional)  
 - [ ] Offline-Download ganzer Playlists (optional)  

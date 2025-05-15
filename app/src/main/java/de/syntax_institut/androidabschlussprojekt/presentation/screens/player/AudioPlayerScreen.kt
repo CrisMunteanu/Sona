@@ -1,8 +1,12 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.player
 
+import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -12,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -83,6 +88,13 @@ fun AudioPlayerScreen(
         }
     }
 
+    // Funktion zum Öffnen der Wikipedia-Seite
+    val openAuthorWiki: (String) -> Unit = { author ->
+        val wikiUrl = "https://en.wikipedia.org/wiki/${author.replace(" ", "_")}"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(wikiUrl))
+        context.startActivity(intent)
+    }
+
     // UI
     Column(
         modifier = Modifier
@@ -92,10 +104,14 @@ fun AudioPlayerScreen(
     ) {
         Image(
             painter = painterResource(id = imageResId),
-            contentDescription = null,
+            contentDescription = currentItem.title,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(240.dp)
-                .padding(16.dp)
+                .aspectRatio(1f)
+                .clip(CircleShape)
+                .border(1.dp, SoftPurple, CircleShape)
+                .padding(2.dp)
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -166,7 +182,7 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Zitat-Anzeige
+        // Zitat-Anzeige mit Wikipedia-Intent
         quote?.let {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
@@ -175,11 +191,22 @@ fun AudioPlayerScreen(
                     color = SoftPurple,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
-                Text(
-                    text = "- ${it.author.ifBlank { "Unknown" }}",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = ElegantRed
-                )
+                if (it.author.isNotBlank()) {
+                    Text(
+                        text = "- ${it.author}",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = ElegantRed,
+                        modifier = Modifier
+                            .clickable { openAuthorWiki(it.author) }
+                            .padding(4.dp)
+                    )
+                } else {
+                    Text(
+                        text = "- Unknown",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = ElegantRed
+                    )
+                }
             }
         } ?: Text(
             text = "Lade Zitat...",

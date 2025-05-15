@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.settings
 
 import android.app.Activity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -99,12 +101,29 @@ fun SettingsScreen(
             onClick = {
                 scope.launch {
                     SettingsDataStore.setOnboardingSeen(context, false)
-                    activity?.recreate() // App neu starten, damit SplashScreen reagiert
+                    activity?.recreate()
                 }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(stringResource(R.string.reset_onboarding))
+        }
+
+        Spacer(modifier = Modifier.height(60.dp))
+
+        // Sona Logo
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.logo_sona),
+                contentDescription = "Sona Logo",
+                modifier = Modifier
+                    .size(220.dp)
+                    .clip(CircleShape)
+            )
         }
     }
 }
