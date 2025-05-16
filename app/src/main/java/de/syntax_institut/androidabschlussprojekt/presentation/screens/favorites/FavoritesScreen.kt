@@ -31,7 +31,7 @@ fun FavoritesScreen(navController: NavController) {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Your Favorites",
+                        text = "Deine Favoriten",
                         color = ElegantRed,
                         fontSize = 30.sp
                     )

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.SettingsDataStore
 import de.syntax_institut.androidabschlussprojekt.domain.util.setLocaleAndRestart
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import kotlinx.coroutines.launch
 
 @Composable
@@ -52,7 +53,8 @@ fun SettingsScreen(
     ) {
         Text(
             text = stringResource(R.string.settings),
-            style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp)
+            style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp),
+            color = ElegantRed
         )
 
         Text(stringResource(R.string.language), fontSize = 18.sp)
@@ -111,7 +113,7 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(60.dp))
 
-        // Sona Logo
+
         Box(
             modifier = Modifier
                 .fillMaxWidth(),

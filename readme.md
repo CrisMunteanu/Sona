@@ -38,7 +38,7 @@ Füge hier am Ende die Screenshots deiner App ein.
    <img src="./img/AudioPlayer.png" width="200">
   <img src="./img/Pose.png" width="200">
   <img src="./img/PosenScreen.png" width="200">
-   
+  <img src="./img/SettingsScreen.png" width="200"> 
 </p>
 
 
