@@ -18,6 +18,7 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.presentation.components.FavoriteCard
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MainViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,6 +26,8 @@ import org.koin.androidx.compose.koinViewModel
 fun FavoritesScreen(navController: NavController) {
     val viewModel: MainViewModel = koinViewModel()
     val favorites by viewModel.favorites.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -37,8 +40,12 @@ fun FavoritesScreen(navController: NavController) {
                     )
                 }
             )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         }
     ) { innerPadding ->
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -48,7 +55,9 @@ fun FavoritesScreen(navController: NavController) {
         ) {
             if (favorites.isEmpty()) {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(1f),
                     contentAlignment = Alignment.Center
                 ) {
                     Text("Noch keine Favoriten gespeichert.")
@@ -61,14 +70,26 @@ fun FavoritesScreen(navController: NavController) {
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     items(favorites) { item ->
-                        FavoriteCard(item = item) {
-                            navController.navigate("player/${item.audioFile}/${item.imageResId}")
-                        }
+                        FavoriteCard(
+                            item = item,
+                            onClick = {
+                                navController.navigate("player/${item.audioFile}/${item.imageResId}")
+                            },
+                            onFavoriteToggle = {
+                                viewModel.toggleFavorite(item)
+                                scope.launch {
+                                    snackbarHostState.showSnackbar(
+                                        message = "„${item.title}“ entfernt 💔",
+                                        withDismissAction = true
+                                    )
+                                }
+                            }
+                        )
                     }
                 }
             }
 
-            //Rundes Sona-Logo unten zentriert
+            // Rundes Logo unten
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

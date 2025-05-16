@@ -24,7 +24,8 @@ import de.syntax_institut.androidabschlussprojekt.presentation.theme.OceanBlue
 @Composable
 fun FavoriteCard(
     item: MeditationItem,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onFavoriteToggle: () -> Unit
 ) {
     val context = LocalContext.current
     var durationText by remember { mutableStateOf<String?>(null) }
@@ -52,15 +53,14 @@ fun FavoriteCard(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(6.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Rundes Bild mit fester Größe und Abstand
+            // Bild
             Image(
                 painter = painterResource(id = item.imageResId),
                 contentDescription = item.title,
@@ -70,9 +70,9 @@ fun FavoriteCard(
                     .clip(CircleShape)
             )
 
-            Spacer(modifier = Modifier.width(16.dp)) // Abstand zwischen Bild und Text
+            Spacer(modifier = Modifier.width(16.dp))
 
-            // Textbereich
+            // Titel + Dauer
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.Center
@@ -81,7 +81,7 @@ fun FavoriteCard(
                     text = item.title,
                     style = MaterialTheme.typography.titleMedium,
                     color = NobleBlack,
-                    maxLines = 1 // optional für einzeilige Titel
+                    maxLines = 1
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
@@ -91,13 +91,17 @@ fun FavoriteCard(
                 )
             }
 
-            // Favoriten-Icon
-            Icon(
-                imageVector = Icons.Filled.Favorite,
-                contentDescription = "Favorit",
-                tint = ElegantRed,
-                modifier = Modifier.size(28.dp)
-            )
+            // Favoriten-Icon (Klickbar)
+            IconButton(
+                onClick = onFavoriteToggle
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Favorite,
+                    contentDescription = "Entfernen",
+                    tint = ElegantRed,
+                    modifier = Modifier.size(28.dp)
+                )
+            }
         }
     }
 }

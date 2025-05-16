@@ -4,6 +4,10 @@ import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -16,6 +20,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -50,9 +55,8 @@ fun AudioPlayerScreen(
     val currentItem = MeditationItem(title, imageResId, fileName, "")
 
     // Favoritenstatus beobachten
-    val isFavorite by produceState(initialValue = false, key1 = currentItem) {
-        value = viewModel.isFavorite(currentItem)
-    }
+    val favorites by viewModel.favorites.collectAsState()
+    val isFavorite = favorites.any { it.audioFile == currentItem.audioFile }
 
     // Zitat aus ZenQuotes laden
     val quote by viewModel.playerQuote.collectAsState()
@@ -127,11 +131,30 @@ fun AudioPlayerScreen(
                 style = MaterialTheme.typography.titleLarge,
                 color = SoftPurple
             )
-            IconButton(onClick = { viewModel.toggleFavorite(currentItem) }) {
+
+            // Herz mit Farb- und Scale-Animation
+
+            val targetColor = if (isFavorite) ElegantRed else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+            val animatedColor by animateColorAsState(targetColor)
+
+            val animatedScale by animateFloatAsState(
+                targetValue = if (isFavorite) 1.2f else 1f,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                )
+            )
+
+            IconButton(
+                onClick = { viewModel.toggleFavorite(currentItem) },
+                modifier = Modifier
+                    .size(48.dp)
+                    .graphicsLayer(scaleX = animatedScale, scaleY = animatedScale)
+            ) {
                 Icon(
                     imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                     contentDescription = "Toggle Favorite",
-                    tint = ElegantRed
+                    tint = animatedColor
                 )
             }
         }
