@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.home
 
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -32,21 +33,21 @@ fun HomeScreen(navController: NavController) {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        //  Atemübung-Karte
+
         item {
             BreathingCard(
                 onClick = { navController.navigate("breathing") }
             )
         }
 
-        //  Zitate-Galerie-Karte
+
         item {
             QuoteGalleryCard(
                 onClick = { navController.navigate("quotes") }
             )
         }
 
-        //  Meditationskarten
+
         items(categories) { item ->
             MeditationCard(item = item) {
                 navController.navigate("player/${item.audioFile}/${item.imageResId}")
@@ -60,24 +61,28 @@ fun QuoteGalleryCard(onClick: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         onClick = onClick,
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF4E7CD)),
+        colors = CardDefaults.cardColors(containerColor = VintageWhite),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 imageVector = Icons.Default.FormatQuote,
                 contentDescription = "Zitat Icon",
-                tint = VintageWhite,
-                modifier = Modifier.size(32.dp)
+                tint = ElegantRed, // jetzt ElegantRed!
+                modifier = Modifier.size(36.dp)
             )
-            Spacer(modifier = Modifier.width(12.dp))
+
+            Spacer(modifier = Modifier.width(16.dp))
+
             Column {
                 Text(
-                    text = "Zitaten Galerie",
-                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 24.sp),
+                    text = "Zitate Galerie",
+                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp),
                     color = ElegantRed
                 )
                 Text(
