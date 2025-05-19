@@ -15,6 +15,7 @@ import de.syntax_institut.androidabschlussprojekt.presentation.components.Medita
 import de.syntax_institut.androidabschlussprojekt.presentation.components.MoodSuggestionCard
 import de.syntax_institut.androidabschlussprojekt.presentation.components.QuoteGalleryCard
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MainViewModel
+import de.syntax_institut.androidabschlussprojekt.presentation.components.JournalButton
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -41,6 +42,12 @@ fun HomeScreen(navController: NavController) {
             QuoteGalleryCard(
                 onClick = { navController.navigate("quotes") }
             )
+        }
+        // Journal Button
+        item {
+            JournalButton {
+                navController.navigate("journal")
+            }
         }
 
         // Stimmung + Vorschlag (NEUE Card!)

@@ -23,6 +23,7 @@ import de.syntax_institut.androidabschlussprojekt.presentation.screens.splash.Sp
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.start.CategoryStartScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.breathe.BreathingScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.timer.TimerScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.journal.JournalScreen
 
 
 @Composable
@@ -136,6 +137,10 @@ fun AppNavigation(
         ) { backStackEntry ->
             val fileName = backStackEntry.arguments?.getString("fileName") ?: "sleep_peaceful1.mp3"
             TimerScreen(fileName = fileName, navController = navController)
+        }
+
+        composable("journal") {
+            JournalScreen(navController)
         }
     }
 }
