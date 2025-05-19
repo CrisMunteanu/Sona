@@ -22,6 +22,8 @@ import de.syntax_institut.androidabschlussprojekt.presentation.screens.settings.
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.splash.SplashScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.start.CategoryStartScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.breathe.BreathingScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.timer.TimerScreen
+
 
 @Composable
 fun AppNavigation(
@@ -92,7 +94,13 @@ fun AppNavigation(
         ) { backStackEntry ->
             val fileName = backStackEntry.arguments?.getString("fileName") ?: "sleep_peaceful1.mp3"
             val imageResId = backStackEntry.arguments?.getInt("imageResId") ?: R.drawable.sleep1
-            AudioPlayerScreen(fileName = fileName, imageResId = imageResId)
+
+
+            AudioPlayerScreen(
+                fileName = fileName,
+                imageResId = imageResId,
+                navController = navController
+            )
         }
 
         composable("pose_list") {
@@ -117,11 +125,17 @@ fun AppNavigation(
                 onToggleDarkMode = onToggleDarkMode
             )
         }
-        // ganz unten innerhalb von NavHost hinzufügen:
 
         composable("breathing") {
             BreathingScreen()
         }
 
+        composable(
+            route = "timer/{fileName}",
+            arguments = listOf(navArgument("fileName") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val fileName = backStackEntry.arguments?.getString("fileName") ?: "sleep_peaceful1.mp3"
+            TimerScreen(fileName = fileName, navController = navController)
+        }
     }
 }

@@ -25,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.domain.model.MeditationItem
 import de.syntax_institut.androidabschlussprojekt.domain.util.formatTime
@@ -37,7 +38,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun AudioPlayerScreen(
     fileName: String,
-    imageResId: Int
+    imageResId: Int,
+    navController: NavController
 ) {
     val context = LocalContext.current
     val viewModel: MainViewModel = koinViewModel()
@@ -58,10 +60,23 @@ fun AudioPlayerScreen(
     val favorites by viewModel.favorites.collectAsState()
     val isFavorite = favorites.any { it.audioFile == currentItem.audioFile }
 
-    // Zitat aus ZenQuotes laden
+    // Zitat aus ViewModel
     val quote by viewModel.playerQuote.collectAsState()
 
-    // Bei Audio-Wechsel: Zitat neu laden
+    // Herz-Animation
+    val animatedColor by animateColorAsState(
+        targetValue = if (isFavorite) ElegantRed else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+    )
+
+    val animatedScale by animateFloatAsState(
+        targetValue = if (isFavorite) 1.2f else 1f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    )
+
+    // Bei Audio-Wechsel Zitat laden
     LaunchedEffect(fileName) {
         viewModel.loadPlayerQuote()
     }
@@ -92,10 +107,10 @@ fun AudioPlayerScreen(
         }
     }
 
-    // Funktion zum Öffnen der Wikipedia-Seite
+    // Wikipedia öffnen
     val openAuthorWiki: (String) -> Unit = { author ->
-        val wikiUrl = "https://en.wikipedia.org/wiki/${author.replace(" ", "_")}"
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(wikiUrl))
+        val url = "https://en.wikipedia.org/wiki/${author.replace(" ", "_")}"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         context.startActivity(intent)
     }
 
@@ -106,6 +121,7 @@ fun AudioPlayerScreen(
             .padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Bild
         Image(
             painter = painterResource(id = imageResId),
             contentDescription = currentItem.title,
@@ -120,7 +136,7 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Titel + Favorit
+        // Titel + Icons
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -132,30 +148,34 @@ fun AudioPlayerScreen(
                 color = SoftPurple
             )
 
-            // Herz mit Farb- und Scale-Animation
+            Row {
+                // Timer-Icon
+                IconButton(onClick = {
+                    navController.navigate("timer/$fileName")
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Timer,
+                        contentDescription = "Timer",
+                        tint = ElegantRed
+                    )
+                }
 
-            val targetColor = if (isFavorite) ElegantRed else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-            val animatedColor by animateColorAsState(targetColor)
-
-            val animatedScale by animateFloatAsState(
-                targetValue = if (isFavorite) 1.2f else 1f,
-                animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                    stiffness = Spring.StiffnessLow
-                )
-            )
-
-            IconButton(
-                onClick = { viewModel.toggleFavorite(currentItem) },
-                modifier = Modifier
-                    .size(48.dp)
-                    .graphicsLayer(scaleX = animatedScale, scaleY = animatedScale)
-            ) {
-                Icon(
-                    imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                    contentDescription = "Toggle Favorite",
-                    tint = animatedColor
-                )
+                // Herz-Icon
+                IconButton(
+                    onClick = { viewModel.toggleFavorite(currentItem) },
+                    modifier = Modifier
+                        .size(48.dp)
+                        .graphicsLayer(
+                            scaleX = animatedScale,
+                            scaleY = animatedScale
+                        )
+                ) {
+                    Icon(
+                        imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                        contentDescription = "Toggle Favorite",
+                        tint = animatedColor
+                    )
+                }
             }
         }
 
@@ -188,7 +208,7 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Play/Pause Button
+        // Play/Pause
         IconButton(onClick = {
             mediaPlayer?.let {
                 if (isPlaying) it.pause() else it.start()
@@ -205,7 +225,7 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Zitat-Anzeige mit Wikipedia-Intent
+        // Zitat-Anzeige
         quote?.let {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(

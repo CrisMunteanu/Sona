@@ -28,7 +28,7 @@ class MainViewModel(
     val favorites: StateFlow<List<MeditationItem>> = favoritesRepository.favorites
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    // ---------- ZenQuotes für AudioPlayer ----------
+
     private val _playerQuote = MutableStateFlow<Quote?>(null)
     val playerQuote: StateFlow<Quote?> = _playerQuote.asStateFlow()
 
@@ -88,6 +88,8 @@ class MainViewModel(
     fun isFavorite(item: MeditationItem): Boolean {
         return favorites.value.any { it.audioFile == item.audioFile }
     }
+
+
 }
 
 
