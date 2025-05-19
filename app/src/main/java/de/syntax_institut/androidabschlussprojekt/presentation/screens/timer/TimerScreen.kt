@@ -17,7 +17,7 @@ import androidx.navigation.NavController
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

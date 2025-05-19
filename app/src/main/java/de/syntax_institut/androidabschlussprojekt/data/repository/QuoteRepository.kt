@@ -27,4 +27,9 @@ class QuoteRepository(
     suspend fun getAllQuotes(): List<Quote> {
         return client.fetchQuotes()
     }
+
+    suspend fun getRandomQuote(): Quote {
+        val quotes = client.fetchQuotes()
+        return quotes.randomOrNull() ?: Quote("Ein neuer Tag, eine neue Chance.", "Sona")
+    }
 }

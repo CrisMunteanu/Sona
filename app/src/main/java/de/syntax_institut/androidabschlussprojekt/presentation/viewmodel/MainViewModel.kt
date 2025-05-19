@@ -28,7 +28,6 @@ class MainViewModel(
     val favorites: StateFlow<List<MeditationItem>> = favoritesRepository.favorites
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-
     private val _playerQuote = MutableStateFlow<Quote?>(null)
     val playerQuote: StateFlow<Quote?> = _playerQuote.asStateFlow()
 
@@ -78,6 +77,20 @@ class MainViewModel(
         }
     }
 
+    // ---------- Tägliches Zufallszitat ----------
+    private val _dailyQuote = MutableStateFlow<Quote?>(null)
+    val dailyQuote: StateFlow<Quote?> = _dailyQuote.asStateFlow()
+
+    fun loadDailyQuote() {
+        viewModelScope.launch {
+            try {
+                _dailyQuote.value = quoteRepository.getRandomQuote()
+            } catch (e: Exception) {
+                _dailyQuote.value = Quote("Heute ist ein guter Tag für Achtsamkeit.", "Sona")
+            }
+        }
+    }
+
     // ---------- Favoriten ----------
     fun toggleFavorite(item: MeditationItem) {
         viewModelScope.launch {
@@ -88,9 +101,4 @@ class MainViewModel(
     fun isFavorite(item: MeditationItem): Boolean {
         return favorites.value.any { it.audioFile == item.audioFile }
     }
-
-
 }
-
-
-
