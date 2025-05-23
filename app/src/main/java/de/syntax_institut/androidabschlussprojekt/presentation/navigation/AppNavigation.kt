@@ -25,6 +25,8 @@ import de.syntax_institut.androidabschlussprojekt.presentation.screens.breathe.B
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.timer.TimerScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.journal.JournalScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.favoritequote.FavoriteQuoteScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.meditation.MeditationHistoryScreen
+import de.syntax_institut.androidabschlussprojekt.domain.model.MeditationItem
 
 @Composable
 fun AppNavigation(
@@ -41,44 +43,38 @@ fun AppNavigation(
         composable("splash") {
             SplashScreen(navController)
         }
-
         composable("onboarding") {
             OnboardingScreen(navController)
         }
-
         composable("mental_benefits") {
             MentalBenefitsScreen(navController)
         }
-
         composable("mental_benefits_detail") {
             MentalBenefitsDetailScreen(navController)
         }
-
         composable("start") {
-            CategoryStartScreen(
-                onItemSelected = { selectedItem ->
-                    navController.navigate("player/${selectedItem.audioFile}/${selectedItem.imageResId}")
-                }
-            )
+            CategoryStartScreen(onItemSelected = { selectedItem ->
+                navController.navigate("player/${selectedItem.audioFile}/${selectedItem.imageResId}")
+            })
         }
-
         composable("home") {
             HomeScreen(navController)
         }
-
         composable("favorites") {
             FavoritesScreen(navController)
         }
-
         composable("quotes") {
             QuotesGalleryScreen(navController)
         }
-
-
         composable("favorite_quotes") {
             FavoriteQuoteScreen(navController)
         }
-
+        composable("journal") {
+            JournalScreen(navController)
+        }
+        composable("meditation_history") {
+            MeditationHistoryScreen(navController = navController)
+        }
         composable(
             route = "quote_detail/{quoteText}/{quoteAuthor}",
             arguments = listOf(
@@ -90,7 +86,6 @@ fun AppNavigation(
             val quoteAuthor = backStackEntry.arguments?.getString("quoteAuthor") ?: ""
             QuoteDetailScreen(quoteText = quoteText, quoteAuthor = quoteAuthor)
         }
-
         composable(
             route = "player/{fileName}/{imageResId}",
             arguments = listOf(
@@ -100,41 +95,12 @@ fun AppNavigation(
         ) { backStackEntry ->
             val fileName = backStackEntry.arguments?.getString("fileName") ?: "sleep_peaceful1.mp3"
             val imageResId = backStackEntry.arguments?.getInt("imageResId") ?: R.drawable.sleep1
-
             AudioPlayerScreen(
                 fileName = fileName,
                 imageResId = imageResId,
                 navController = navController
             )
         }
-
-        composable("pose_list") {
-            MeditationPoseListScreen { poseId ->
-                navController.navigate("pose_detail/$poseId")
-            }
-        }
-
-        composable(
-            route = "pose_detail/{poseId}",
-            arguments = listOf(
-                navArgument("poseId") { type = NavType.IntType }
-            )
-        ) { backStackEntry ->
-            val poseId = backStackEntry.arguments?.getInt("poseId") ?: -1
-            MeditationPoseDetailScreen(poseId = poseId)
-        }
-
-        composable("settings") {
-            SettingsScreen(
-                isDarkMode = isDarkMode,
-                onToggleDarkMode = onToggleDarkMode
-            )
-        }
-
-        composable("breathing") {
-            BreathingScreen()
-        }
-
         composable(
             route = "timer/{fileName}",
             arguments = listOf(navArgument("fileName") { type = NavType.StringType })
@@ -142,9 +108,26 @@ fun AppNavigation(
             val fileName = backStackEntry.arguments?.getString("fileName") ?: "sleep_peaceful1.mp3"
             TimerScreen(fileName = fileName, navController = navController)
         }
-
-        composable("journal") {
-            JournalScreen(navController)
+        composable("pose_list") {
+            MeditationPoseListScreen { poseId ->
+                navController.navigate("pose_detail/$poseId")
+            }
+        }
+        composable(
+            route = "pose_detail/{poseId}",
+            arguments = listOf(navArgument("poseId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val poseId = backStackEntry.arguments?.getInt("poseId") ?: -1
+            MeditationPoseDetailScreen(poseId = poseId, navController = navController)
+        }
+        composable("breathing") {
+            BreathingScreen()
+        }
+        composable("settings") {
+            SettingsScreen(
+                isDarkMode = isDarkMode,
+                onToggleDarkMode = onToggleDarkMode
+            )
         }
     }
 }

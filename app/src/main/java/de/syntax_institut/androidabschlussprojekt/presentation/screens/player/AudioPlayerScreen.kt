@@ -32,8 +32,10 @@ import de.syntax_institut.androidabschlussprojekt.domain.util.formatTime
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MainViewModel
+import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MeditationHistoryViewModel
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun AudioPlayerScreen(
@@ -43,6 +45,7 @@ fun AudioPlayerScreen(
 ) {
     val context = LocalContext.current
     val viewModel: MainViewModel = koinViewModel()
+    val historyViewModel: MeditationHistoryViewModel = koinViewModel()
 
     var mediaPlayer by remember { mutableStateOf<MediaPlayer?>(null) }
     var isPlaying by remember { mutableStateOf(false) }
@@ -56,14 +59,11 @@ fun AudioPlayerScreen(
 
     val currentItem = MeditationItem(title, imageResId, fileName, "")
 
-    // Favoritenstatus beobachten
     val favorites by viewModel.favorites.collectAsState()
     val isFavorite = favorites.any { it.audioFile == currentItem.audioFile }
 
-    // Zitat aus ViewModel
     val quote by viewModel.playerQuote.collectAsState()
 
-    // Herz-Animation
     val animatedColor by animateColorAsState(
         targetValue = if (isFavorite) ElegantRed else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     )
@@ -76,12 +76,10 @@ fun AudioPlayerScreen(
         )
     )
 
-    // Bei Audio-Wechsel Zitat laden
     LaunchedEffect(fileName) {
         viewModel.loadPlayerQuote()
     }
 
-    // MediaPlayer initialisieren
     DisposableEffect(fileName) {
         val player = MediaPlayer().apply {
             setAudioAttributes(
@@ -96,10 +94,16 @@ fun AudioPlayerScreen(
             duration = this.duration
         }
         mediaPlayer = player
-        onDispose { player.release() }
+        onDispose {
+            // Verlauf speichern wenn abgespielt wurde
+            if (currentPosition > 0) {
+                val secondsPlayed = TimeUnit.MILLISECONDS.toSeconds(currentPosition.toLong()).toInt()
+                historyViewModel.saveMeditation(title, fileName, secondsPlayed)
+            }
+            player.release()
+        }
     }
 
-    // Fortschritt aktualisieren
     LaunchedEffect(isPlaying) {
         while (isPlaying && !userSeeking) {
             delay(500L)
@@ -107,21 +111,18 @@ fun AudioPlayerScreen(
         }
     }
 
-    // Wikipedia öffnen
     val openAuthorWiki: (String) -> Unit = { author ->
         val url = "https://en.wikipedia.org/wiki/${author.replace(" ", "_")}"
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         context.startActivity(intent)
     }
 
-    // UI
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Bild
         Image(
             painter = painterResource(id = imageResId),
             contentDescription = currentItem.title,
@@ -136,7 +137,6 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Titel + Icons
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -149,7 +149,6 @@ fun AudioPlayerScreen(
             )
 
             Row {
-                // Timer-Icon
                 IconButton(onClick = {
                     navController.navigate("timer/$fileName")
                 }) {
@@ -160,7 +159,6 @@ fun AudioPlayerScreen(
                     )
                 }
 
-                // Herz-Icon
                 IconButton(
                     onClick = { viewModel.toggleFavorite(currentItem) },
                     modifier = Modifier
@@ -181,7 +179,6 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Fortschrittsbalken
         Slider(
             value = currentPosition.toFloat(),
             onValueChange = {
@@ -208,7 +205,6 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Play/Pause
         IconButton(onClick = {
             mediaPlayer?.let {
                 if (isPlaying) it.pause() else it.start()
@@ -225,7 +221,6 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Zitat-Anzeige
         quote?.let {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
@@ -259,7 +254,6 @@ fun AudioPlayerScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Logo
         Box(
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center

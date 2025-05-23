@@ -1,12 +1,18 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.splash
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -17,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -25,17 +32,31 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import de.syntax_institut.androidabschlussprojekt.BuildConfig
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.SettingsDataStore
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import de.syntax_institut.androidabschlussprojekt.BuildConfig
 
 @Composable
 fun SplashScreen(navController: NavController) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     var logoVisible by remember { mutableStateOf(false) }
 
-    // Entscheidet nach Splash-Dauer ob Onboarding oder Start
+
+    val infiniteTransition = rememberInfiniteTransition(label = "rotation")
+    val rotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(3000),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "rotation"
+    )
+
+
     LaunchedEffect(Unit) {
         logoVisible = true
         delay(2500)
@@ -60,14 +81,16 @@ fun SplashScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Logo mit animierter Sichtbarkeit
+
             AnimatedVisibility(
                 visible = logoVisible,
                 enter = fadeIn(tween(1000)),
                 exit = fadeOut()
             ) {
                 Box(
-                    modifier = Modifier.size(260.dp),
+                    modifier = Modifier
+                        .size(260.dp)
+                        .graphicsLayer(rotationZ = rotation),
                     contentAlignment = Alignment.Center
                 ) {
                     Canvas(modifier = Modifier.fillMaxSize()) {
@@ -102,7 +125,7 @@ fun SplashScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Zitat einblenden
+
             AnimatedVisibility(
                 visible = logoVisible,
                 enter = fadeIn(tween(1500)),
@@ -117,14 +140,25 @@ fun SplashScreen(navController: NavController) {
                 )
             }
 
-            // Debug-Hinweis (nur sichtbar in BuildConfig.DEBUG)
+
             if (BuildConfig.DEBUG) {
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(
                     text = stringResource(R.string.reset_onboarding),
                     color = Color.Blue,
                     fontSize = 14.sp,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .clickable {
+                            scope.launch {
+                                SettingsDataStore.setOnboardingSeen(context, false)
+                                Toast.makeText(
+                                    context,
+                                    "Onboarding zurückgesetzt",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
                 )
             }
         }

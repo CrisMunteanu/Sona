@@ -18,24 +18,27 @@ val appModule = module {
             androidApplication(),
             AppDatabase::class.java,
             "sona_db"
-        ).fallbackToDestructiveMigration()
+        )
+            .fallbackToDestructiveMigration() // Für dev-Phase
             .build()
     }
 
-    //  DAOs
+    // DAOs
     single { get<AppDatabase>().favoriteDao() }
     single { get<AppDatabase>().journalDao() }
     single { get<AppDatabase>().favoriteQuoteDao() }
+    single { get<AppDatabase>().meditationHistoryDao() } // ✅ NEU
 
-    // API-Client für type.fit
+    // API-Clients
     single { QuoteApiClient(context = androidContext()) }
 
-    //  Repositories
+    // Repositories
     single { QuoteRepository(client = get()) }
     single { ZenQuotesRepository() }
     single { FavoritesRepository(get()) }
     single { JournalRepository(get()) }
     single { FavoriteQuoteRepository(get()) }
+    single { MeditationHistoryRepository(get()) } // ✅ NEU
 
     // ViewModels
     viewModel {
@@ -52,5 +55,9 @@ val appModule = module {
 
     viewModel {
         FavoriteQuoteViewModel(repository = get())
+    }
+
+    viewModel {
+        MeditationHistoryViewModel(repository = get()) // ✅ NEU
     }
 }
