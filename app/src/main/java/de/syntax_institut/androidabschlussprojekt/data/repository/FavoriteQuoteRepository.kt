@@ -19,4 +19,8 @@ class FavoriteQuoteRepository(private val dao: FavoriteQuoteDao) {
     suspend fun isFavorite(text: String, author: String): Boolean {
         return dao.isFavorite(text, author)
     }
+
+    suspend fun clearAllFavorites() {
+        dao.deleteAll()
+    }
 }

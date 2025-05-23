@@ -17,4 +17,7 @@ interface FavoriteQuoteDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM favorite_quotes WHERE text = :text AND author = :author)")
     suspend fun isFavorite(text: String, author: String): Boolean
+
+    @Query("DELETE FROM favorite_quotes")
+    suspend fun deleteAll()
 }

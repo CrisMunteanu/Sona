@@ -24,7 +24,7 @@ import de.syntax_institut.androidabschlussprojekt.presentation.screens.start.Cat
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.breathe.BreathingScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.timer.TimerScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.journal.JournalScreen
-
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.favoritequote.FavoriteQuoteScreen
 
 @Composable
 fun AppNavigation(
@@ -74,6 +74,11 @@ fun AppNavigation(
             QuotesGalleryScreen(navController)
         }
 
+
+        composable("favorite_quotes") {
+            FavoriteQuoteScreen(navController)
+        }
+
         composable(
             route = "quote_detail/{quoteText}/{quoteAuthor}",
             arguments = listOf(
@@ -95,7 +100,6 @@ fun AppNavigation(
         ) { backStackEntry ->
             val fileName = backStackEntry.arguments?.getString("fileName") ?: "sleep_peaceful1.mp3"
             val imageResId = backStackEntry.arguments?.getInt("imageResId") ?: R.drawable.sleep1
-
 
             AudioPlayerScreen(
                 fileName = fileName,

@@ -49,74 +49,93 @@ fun QuotesGalleryScreen(
             isRefreshing = false
         }
     ) {
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(16.dp)
         ) {
-            items(quotes) { quote ->
-                val isFavorite = favorites.any { it.text == quote.text && it.author == quote.author }
+            // 🔘 NEUER BUTTON
+            Button(
+                onClick = { navController.navigate("favorite_quotes") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 12.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = ElegantRed)
+            ) {
+                Text(
+                    text = "❤️ Lieblingszitate anzeigen",
+                    color = Color.White
+                )
+            }
 
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 4.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFFFF8F3)
-                    ),
-                    elevation = CardDefaults.cardElevation(
-                        defaultElevation = 6.dp
-                    )
-                ) {
-                    Column(
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(quotes) { quote ->
+                    val isFavorite =
+                        favorites.any { it.text == quote.text && it.author == quote.author }
+
+                    Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(20.dp),
-                        horizontalAlignment = Alignment.Start
-                    ) {
-                        Text(
-                            text = "“${quote.text}”",
-                            color = ElegantRed,
-                            fontSize = 18.sp,
-                            style = MaterialTheme.typography.bodyLarge
+                            .padding(horizontal = 4.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color(0xFFFFF8F3)
+                        ),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 6.dp
                         )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(20.dp),
+                            horizontalAlignment = Alignment.Start
                         ) {
                             Text(
-                                text = "- ${quote.author}",
-                                color = OceanBlue.copy(alpha = 0.9f),
-                                fontSize = 16.sp,
-                                style = MaterialTheme.typography.labelMedium,
-                                modifier = Modifier.clickable {
-                                    val encodedText = Uri.encode(quote.text)
-                                    val encodedAuthor = Uri.encode(quote.author)
-                                    navController.navigate("quote_detail/$encodedText/$encodedAuthor")
-                                }
+                                text = "“${quote.text}”",
+                                color = ElegantRed,
+                                fontSize = 18.sp,
+                                style = MaterialTheme.typography.bodyLarge
                             )
 
-                            IconButton(onClick = {
-                                val entity = FavoriteQuoteEntity(
-                                    text = quote.text,
-                                    author = quote.author,
-                                    authorInfo = quote.authorInfo,
-                                    authorImageResId = quote.authorImageResId
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "- ${quote.author}",
+                                    color = OceanBlue.copy(alpha = 0.9f),
+                                    fontSize = 16.sp,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    modifier = Modifier.clickable {
+                                        val encodedText = Uri.encode(quote.text)
+                                        val encodedAuthor = Uri.encode(quote.author)
+                                        navController.navigate("quote_detail/$encodedText/$encodedAuthor")
+                                    }
                                 )
-                                if (isFavorite) favoriteQuoteViewModel.removeFavorite(entity)
-                                else favoriteQuoteViewModel.addFavorite(entity)
-                            }) {
-                                Icon(
-                                    imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                                    contentDescription = "Favorit",
-                                    tint = if (isFavorite) ElegantRed else Color.Gray
-                                )
+
+                                IconButton(onClick = {
+                                    val entity = FavoriteQuoteEntity(
+                                        text = quote.text,
+                                        author = quote.author,
+                                        authorInfo = quote.authorInfo,
+                                        authorImageResId = quote.authorImageResId
+                                    )
+                                    if (isFavorite) favoriteQuoteViewModel.removeFavorite(entity)
+                                    else favoriteQuoteViewModel.addFavorite(entity)
+                                }) {
+                                    Icon(
+                                        imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                        contentDescription = "Favorit",
+                                        tint = if (isFavorite) ElegantRed else Color.Gray
+                                    )
+                                }
                             }
                         }
                     }
