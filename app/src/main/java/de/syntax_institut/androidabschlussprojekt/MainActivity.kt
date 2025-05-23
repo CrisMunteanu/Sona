@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
                             scope.launch {
                                 SettingsDataStore.saveDarkMode(context, it)
                             }
-                        },
+                        }
 
                     )
                 }
