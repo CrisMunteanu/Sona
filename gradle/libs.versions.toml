@@ -7,14 +7,14 @@ coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.7"
+lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
-composeBom = "2024.04.01"
+composeBom = "2025.05.01"
 # extended icons
-compose = "1.6.7"
+compose = "1.7.8"
 # navigation
-materialIconsExtended = "1.5.4"
-navigationCompose = "2.8.3"
+materialIconsExtended = "1.7.8"
+navigationCompose = "2.9.0"
 kotlinSerialization = "1.6.3"
 # api
 moshiVersion = "1.15.0"
@@ -22,9 +22,9 @@ retrofitVersion = "2.11.0"
 # async image
 coilCompose = "3.0.0-rc02"
 # data store
-datastorePreferences = "1.1.1"
+datastorePreferences = "1.1.7"
 # room
-roomRuntime = "2.6.0"
+roomRuntime = "2.7.1"
 kspVersion = "2.0.21-1.0.25"
 # koin
 koinBom = "4.1.0-Beta4"

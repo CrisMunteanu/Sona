@@ -2,13 +2,9 @@ package de.syntax_institut.androidabschlussprojekt.di
 
 import androidx.room.Room
 import de.syntax_institut.androidabschlussprojekt.data.local.AppDatabase
-import de.syntax_institut.androidabschlussprojekt.data.repository.FavoritesRepository
-import de.syntax_institut.androidabschlussprojekt.data.repository.JournalRepository
-import de.syntax_institut.androidabschlussprojekt.data.repository.QuoteRepository
-import de.syntax_institut.androidabschlussprojekt.data.repository.ZenQuotesRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.*
 import de.syntax_institut.androidabschlussprojekt.domain.remote.client.QuoteApiClient
-import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.JournalViewModel
-import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MainViewModel
+import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.*
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -26,18 +22,20 @@ val appModule = module {
             .build()
     }
 
-    // DAOs
+    //  DAOs
     single { get<AppDatabase>().favoriteDao() }
     single { get<AppDatabase>().journalDao() }
+    single { get<AppDatabase>().favoriteQuoteDao() }
 
-    // API-Client für type.fit (Quote Gallery)
+    // API-Client für type.fit
     single { QuoteApiClient(context = androidContext()) }
 
-    // Repositories
+    //  Repositories
     single { QuoteRepository(client = get()) }
     single { ZenQuotesRepository() }
     single { FavoritesRepository(get()) }
     single { JournalRepository(get()) }
+    single { FavoriteQuoteRepository(get()) }
 
     // ViewModels
     viewModel {
@@ -49,8 +47,10 @@ val appModule = module {
     }
 
     viewModel {
-        JournalViewModel(
-            journalRepository = get()
-        )
+        JournalViewModel(journalRepository = get())
+    }
+
+    viewModel {
+        FavoriteQuoteViewModel(repository = get())
     }
 }
