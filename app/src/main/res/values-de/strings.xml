@@ -43,5 +43,7 @@
     <string name="hold_breath">Halten</string>
     <string name="start">Start</string>
     <string name="stop">Stopp</string>
+    <string name="onboarding_reset_success">Onboarding wurde zurückgesetzt.</string>
+
 
 </resources>

@@ -27,7 +27,7 @@ val appModule = module {
     single { get<AppDatabase>().favoriteDao() }
     single { get<AppDatabase>().journalDao() }
     single { get<AppDatabase>().favoriteQuoteDao() }
-    single { get<AppDatabase>().meditationHistoryDao() } // ✅ NEU
+    single { get<AppDatabase>().meditationHistoryDao() }
 
     // API-Clients
     single { QuoteApiClient(context = androidContext()) }
@@ -38,7 +38,7 @@ val appModule = module {
     single { FavoritesRepository(get()) }
     single { JournalRepository(get()) }
     single { FavoriteQuoteRepository(get()) }
-    single { MeditationHistoryRepository(get()) } // ✅ NEU
+    single { MeditationHistoryRepository(get()) }
 
     // ViewModels
     viewModel {
@@ -58,6 +58,6 @@ val appModule = module {
     }
 
     viewModel {
-        MeditationHistoryViewModel(repository = get()) // ✅ NEU
+        MeditationHistoryViewModel(repository = get())
     }
 }

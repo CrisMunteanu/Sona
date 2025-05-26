@@ -31,6 +31,7 @@ fun SettingsScreen(
     val context = LocalContext.current
     val activity = context as? Activity
     val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     var selectedLanguageCode by remember { mutableStateOf("de") }
 
@@ -45,87 +46,93 @@ fun SettingsScreen(
         "🇪🇸" to "es"
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
-    ) {
-        Text(
-            text = stringResource(R.string.settings),
-            style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp),
-            color = ElegantRed
-        )
-
-        Text(stringResource(R.string.language), fontSize = 18.sp)
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp)
+                .padding(innerPadding),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            emojiLanguages.forEach { (emoji, code) ->
-                Box(
-                    modifier = Modifier
-                        .size(54.dp)
-                        .clip(CircleShape)
-                        .background(
-                            if (selectedLanguageCode == code)
-                                MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
-                            else
-                                Color.Transparent
-                        )
-                        .clickable {
-                            scope.launch {
-                                SettingsDataStore.saveLanguageCode(context, code)
-                                activity?.let { setLocaleAndRestart(it, code) }
-                            }
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = emoji, fontSize = 28.sp)
+            Text(
+                text = stringResource(R.string.settings),
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp),
+                color = ElegantRed
+            )
+
+            Text(stringResource(R.string.language), fontSize = 18.sp)
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                emojiLanguages.forEach { (emoji, code) ->
+                    Box(
+                        modifier = Modifier
+                            .size(54.dp)
+                            .clip(CircleShape)
+                            .background(
+                                if (selectedLanguageCode == code)
+                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                                else
+                                    Color.Transparent
+                            )
+                            .clickable {
+                                scope.launch {
+                                    SettingsDataStore.saveLanguageCode(context, code)
+                                    activity?.let { setLocaleAndRestart(it, code) }
+                                }
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = emoji, fontSize = 28.sp)
+                    }
                 }
             }
-        }
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(stringResource(R.string.dark_mode), fontSize = 18.sp)
-            Switch(
-                checked = isDarkMode,
-                onCheckedChange = onToggleDarkMode
-            )
-        }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(stringResource(R.string.dark_mode), fontSize = 18.sp)
+                Switch(
+                    checked = isDarkMode,
+                    onCheckedChange = onToggleDarkMode
+                )
+            }
 
-        Button(
-            onClick = {
-                scope.launch {
-                    SettingsDataStore.setOnboardingSeen(context, false)
-                    activity?.recreate()
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(stringResource(R.string.reset_onboarding))
-        }
+            Button(
+                onClick = {
+                    scope.launch {
+                        SettingsDataStore.setOnboardingSeen(context, false)
+                        snackbarHostState.showSnackbar(context.getString(R.string.onboarding_reset_success))
+                        activity?.recreate()
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.reset_onboarding))
+            }
 
-        Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(60.dp))
 
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.logo_sona),
-                contentDescription = "Sona Logo",
+            Box(
                 modifier = Modifier
-                    .size(220.dp)
-                    .clip(CircleShape)
-            )
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.logo_sona),
+                    contentDescription = "Sona Logo",
+                    modifier = Modifier
+                        .size(220.dp)
+                        .clip(CircleShape)
+                )
+            }
         }
     }
 }

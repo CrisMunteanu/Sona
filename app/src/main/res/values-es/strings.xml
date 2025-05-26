@@ -43,4 +43,7 @@
     <string name="hold_breath">Mantener</string>
     <string name="start">Iniciar</string>
     <string name="stop">Detener</string>
+    <string name="onboarding_reset_success">La introducción se ha restablecido.</string>
+
+
 </resources>
