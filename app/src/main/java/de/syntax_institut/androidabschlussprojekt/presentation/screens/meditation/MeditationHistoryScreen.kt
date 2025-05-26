@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.meditation
 
+import android.view.inputmethod.DeleteGesture
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MeditationHistoryViewModel
@@ -34,7 +36,7 @@ fun MeditationHistoryScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("🕓 Meditationsverlauf", color = SoftPurple) },
+                title = { Text("🕓 Meditationsverlauf", color = ElegantRed) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -50,7 +52,7 @@ fun MeditationHistoryScreen(
                             Icon(
                                 imageVector = Icons.Default.Delete,
                                 contentDescription = "Alles löschen",
-                                tint = SoftPurple
+                                tint = ElegantRed
                             )
                         }
                     }
@@ -94,7 +96,7 @@ fun MeditationHistoryScreen(
                                     Column {
                                         Text(
                                             text = item.title,
-                                            color = SoftPurple,
+                                            color = ElegantRed,
                                             fontSize = 17.sp
                                         )
                                         Spacer(modifier = Modifier.height(4.dp))
@@ -105,7 +107,7 @@ fun MeditationHistoryScreen(
                                         Icon(
                                             imageVector = Icons.Default.Delete,
                                             contentDescription = "Eintrag löschen",
-                                            tint = SoftPurple
+                                            tint = ElegantRed
                                         )
                                     }
                                 }
