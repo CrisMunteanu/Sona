@@ -44,6 +44,13 @@
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="onboarding_reset_success">Onboarding has been reset.</string>
+    <string name="reminder_title">Reminder</string>
+    <string name="reminder_switch_label">Enable daily reminder</string>
+    <string name="reminder_time_label">Time</string>
+    <string name="reminder_set_for">Reminder set for %1$s</string>
+    <string name="reminder_active_since">Active since %1$s</string>
+    <string name="reminder_enabled_snackbar">Reminder enabled for %1$s</string>
+    <string name="reminder_disabled_snackbar">Reminder disabled</string>
 
 
 </resources>

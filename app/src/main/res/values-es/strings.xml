@@ -44,6 +44,13 @@
     <string name="start">Iniciar</string>
     <string name="stop">Detener</string>
     <string name="onboarding_reset_success">La introducción se ha restablecido.</string>
+    <string name="reminder_title">Recordatorio</string>
+    <string name="reminder_switch_label">Activar recordatorio diario</string>
+    <string name="reminder_time_label">Hora</string>
+    <string name="reminder_set_for">Recordatorio programado para las %1$s</string>
+    <string name="reminder_active_since">Activo desde las %1$s</string>
+    <string name="reminder_enabled_snackbar">Recordatorio activado para las %1$s</string>
+    <string name="reminder_disabled_snackbar">Recordatorio desactivado</string>
 
 
 </resources>

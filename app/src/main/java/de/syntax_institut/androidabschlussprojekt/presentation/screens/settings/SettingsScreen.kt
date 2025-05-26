@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.settings
 
 import android.app.Activity
+import android.app.TimePickerDialog
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.SettingsDataStore
+import de.syntax_institut.androidabschlussprojekt.domain.util.NotificationHelper
 import de.syntax_institut.androidabschlussprojekt.domain.util.setLocaleAndRestart
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import kotlinx.coroutines.launch
@@ -34,9 +36,15 @@ fun SettingsScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     var selectedLanguageCode by remember { mutableStateOf("de") }
+    var isReminderEnabled by remember { mutableStateOf(false) }
+    var reminderHour by remember { mutableStateOf(8) }
+    var reminderMinute by remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
         selectedLanguageCode = SettingsDataStore.getLanguageCode(context)
+        isReminderEnabled = SettingsDataStore.getReminderEnabled(context)
+        reminderHour = SettingsDataStore.getReminderHour(context)
+        reminderMinute = SettingsDataStore.getReminderMinute(context)
     }
 
     val emojiLanguages = listOf(
@@ -45,6 +53,30 @@ fun SettingsScreen(
         "🇫🇷" to "fr",
         "🇪🇸" to "es"
     )
+
+    val timeText = String.format("%02d:%02d", reminderHour, reminderMinute)
+
+    val timePickerDialog = remember {
+        TimePickerDialog(
+            context,
+            { _, hour: Int, minute: Int ->
+                reminderHour = hour
+                reminderMinute = minute
+                scope.launch {
+                    SettingsDataStore.saveReminderTime(context, hour, minute)
+                }
+                if (isReminderEnabled) {
+                    NotificationHelper.scheduleDailyReminder(context, hour, minute)
+                    scope.launch {
+                        snackbarHostState.showSnackbar(context.getString(R.string.reminder_set_for, timeText))
+                    }
+                }
+            },
+            reminderHour,
+            reminderMinute,
+            true
+        )
+    }
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
@@ -117,8 +149,59 @@ fun SettingsScreen(
                 Text(stringResource(R.string.reset_onboarding))
             }
 
-            Spacer(modifier = Modifier.height(60.dp))
+            Text(stringResource(R.string.reminder_title), fontSize = 18.sp)
 
+            Column {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(stringResource(R.string.reminder_switch_label))
+                    Switch(
+                        checked = isReminderEnabled,
+                        onCheckedChange = { isChecked ->
+                            isReminderEnabled = isChecked
+                            scope.launch {
+                                SettingsDataStore.saveReminderEnabled(context, isChecked)
+
+                                if (isChecked) {
+                                    NotificationHelper.scheduleDailyReminder(context, reminderHour, reminderMinute)
+                                    snackbarHostState.showSnackbar(
+                                        context.getString(R.string.reminder_enabled_snackbar, String.format("%02d:%02d", reminderHour, reminderMinute))
+                                    )
+                                } else {
+                                    NotificationHelper.cancelDailyReminder(context)
+                                    snackbarHostState.showSnackbar(context.getString(R.string.reminder_disabled_snackbar))
+                                }
+                            }
+                        }
+                    )
+                }
+
+                //  Statusanzeige unter dem Switch
+                if (isReminderEnabled) {
+                    Text(
+                        text = stringResource(R.string.reminder_active_since, String.format("%02d:%02d", reminderHour, reminderMinute)),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.75f),
+                        modifier = Modifier.padding(start = 4.dp, top = 4.dp)
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(stringResource(R.string.reminder_time_label))
+                OutlinedButton(onClick = { timePickerDialog.show() }) {
+                    Text(timeText)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(60.dp))
 
             Box(
                 modifier = Modifier
