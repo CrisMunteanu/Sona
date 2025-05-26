@@ -51,6 +51,10 @@
     <string name="reminder_active_since">Activo desde las %1$s</string>
     <string name="reminder_enabled_snackbar">Recordatorio activado para las %1$s</string>
     <string name="reminder_disabled_snackbar">Recordatorio desactivado</string>
+    <string name="send_test_notification">Enviar notificación de prueba</string>
+    <string name="reminder_test_message">Tómate un momento para meditar o leer una cita ✨</string>
+    <string name="meditation_done_title">¡Bien hecho!</string>
+    <string name="meditation_done_message">Te tomaste un momento para ti. Sigue así ✨</string>
 
 
 </resources>

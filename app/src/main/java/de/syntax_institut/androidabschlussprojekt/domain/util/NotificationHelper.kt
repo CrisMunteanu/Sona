@@ -95,4 +95,24 @@ object NotificationHelper {
 
         alarmManager.cancel(pendingIntent)
     }
+
+    fun showMeditationCompletedNotification(context: Context) {
+        val title = context.getString(R.string.meditation_done_title)
+        val message = context.getString(R.string.meditation_done_message)
+
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            NotificationManagerCompat.from(context).notify(
+                REMINDER_REQUEST_CODE + 1,
+                builder.build()
+            )
+        }
+    }
 }

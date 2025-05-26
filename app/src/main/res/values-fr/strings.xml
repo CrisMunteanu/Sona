@@ -51,5 +51,9 @@
     <string name="reminder_active_since">Actif depuis %1$s</string>
     <string name="reminder_enabled_snackbar">Rappel activé à %1$s</string>
     <string name="reminder_disabled_snackbar">Rappel désactivé</string>
+    <string name="send_test_notification">Envoyer une notification de test</string>
+    <string name="reminder_test_message">Accorde-toi un instant de méditation ou lis une citation ✨</string>
+    <string name="meditation_done_title">Bravo !</string>
+    <string name="meditation_done_message">Tu t’es accordé un moment à toi. Continue comme ça ✨</string>
 
 </resources>

@@ -149,7 +149,7 @@ fun SettingsScreen(
                 Text(stringResource(R.string.reset_onboarding))
             }
 
-            Text(stringResource(R.string.reminder_title), fontSize = 18.sp)
+            Text(stringResource(R.string.reminder_title), fontSize = 18.sp, color = ElegantRed)
 
             Column {
                 Row(
@@ -168,11 +168,14 @@ fun SettingsScreen(
                                 if (isChecked) {
                                     NotificationHelper.scheduleDailyReminder(context, reminderHour, reminderMinute)
                                     snackbarHostState.showSnackbar(
-                                        context.getString(R.string.reminder_enabled_snackbar, String.format("%02d:%02d", reminderHour, reminderMinute))
+                                        context.getString(R.string.reminder_enabled_snackbar,
+                                            String.format
+                                                ("%02d:%02d", reminderHour, reminderMinute))
                                     )
                                 } else {
                                     NotificationHelper.cancelDailyReminder(context)
-                                    snackbarHostState.showSnackbar(context.getString(R.string.reminder_disabled_snackbar))
+                                    snackbarHostState.showSnackbar(context.getString
+                                        (R.string.reminder_disabled_snackbar))
                                 }
                             }
                         }
@@ -182,7 +185,8 @@ fun SettingsScreen(
                 //  Statusanzeige unter dem Switch
                 if (isReminderEnabled) {
                     Text(
-                        text = stringResource(R.string.reminder_active_since, String.format("%02d:%02d", reminderHour, reminderMinute)),
+                        text = stringResource(R.string.reminder_active_since,
+                            String.format("%02d:%02d", reminderHour, reminderMinute)),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primary.copy(alpha = 0.75f),
                         modifier = Modifier.padding(start = 4.dp, top = 4.dp)
@@ -199,6 +203,19 @@ fun SettingsScreen(
                 OutlinedButton(onClick = { timePickerDialog.show() }) {
                     Text(timeText)
                 }
+            }
+
+            Button(
+                onClick = {
+                    NotificationHelper.showReminderNotification(
+                        context = context,
+                        title = context.getString(R.string.reminder_title),
+                        message = context.getString(R.string.reminder_test_message)
+                    )
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("🔔 " + stringResource(R.string.send_test_notification))
             }
 
             Spacer(modifier = Modifier.height(60.dp))

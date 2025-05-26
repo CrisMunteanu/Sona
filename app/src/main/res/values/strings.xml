@@ -51,6 +51,11 @@
     <string name="reminder_active_since">Active since %1$s</string>
     <string name="reminder_enabled_snackbar">Reminder enabled for %1$s</string>
     <string name="reminder_disabled_snackbar">Reminder disabled</string>
+    <string name="send_test_notification">Send test notification</string>
+    <string name="reminder_test_message">Take a moment to meditate or read something inspiring ✨</string>
+    <string name="meditation_done_title">Well done!</string>
+    <string name="meditation_done_message">You took time for yourself today. Keep it up ✨</string>
+
 
 
 </resources>

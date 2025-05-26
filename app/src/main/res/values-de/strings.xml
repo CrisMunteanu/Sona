@@ -51,6 +51,11 @@
     <string name="reminder_active_since">Aktiv seit %1$s Uhr</string>
     <string name="reminder_enabled_snackbar">Erinnerung aktiviert für %1$s Uhr</string>
     <string name="reminder_disabled_snackbar">Erinnerung deaktiviert</string>
+    <string name="send_test_notification">Test-Benachrichtigung senden</string>
+    <string name="reminder_test_message">Gönn dir eine kurze Meditation oder ein inspirierendes Zitat ✨</string>
+    <string name="meditation_done_title">Gut gemacht!</string>
+    <string name="meditation_done_message">Du hast dir heute Zeit für dich genommen. Bleib dran ✨</string>
+
 
 
 </resources>

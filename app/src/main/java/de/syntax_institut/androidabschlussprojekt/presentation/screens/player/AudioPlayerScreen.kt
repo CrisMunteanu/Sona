@@ -36,6 +36,7 @@ import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.Meditat
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 import java.util.concurrent.TimeUnit
+import de.syntax_institut.androidabschlussprojekt.domain.util.NotificationHelper
 
 @Composable
 fun AudioPlayerScreen(
@@ -99,6 +100,8 @@ fun AudioPlayerScreen(
             if (currentPosition > 0) {
                 val secondsPlayed = TimeUnit.MILLISECONDS.toSeconds(currentPosition.toLong()).toInt()
                 historyViewModel.saveMeditation(title, fileName, secondsPlayed)
+                NotificationHelper.showMeditationCompletedNotification(context)
+
             }
             player.release()
         }
