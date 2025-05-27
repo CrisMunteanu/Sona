@@ -50,7 +50,7 @@ fun FavoriteQuoteScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("❤️ Lieblingszitate", color = ElegantRed)
+                    Text("Lieblingszitate", color = ElegantRed)
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {

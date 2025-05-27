@@ -80,15 +80,15 @@ fun BreathingScreen() {
             logoRes = R.drawable.logo_sona
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(64.dp))
 
         Text(
             text = phase,
-            style = MaterialTheme.typography.titleLarge.copy(fontSize = 28.sp),
+            style = MaterialTheme.typography.titleLarge.copy(fontSize =28.sp),
             color = ElegantRed
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         // Fortschritt
         LinearProgressIndicator(
@@ -106,7 +106,7 @@ fun BreathingScreen() {
             color = MaterialTheme.colorScheme.primary
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(64.dp))
 
         // Dauer-Auswahl
         if (!isRunning) {

@@ -100,7 +100,7 @@ fun QuoteDetailScreen(
                 painter = painterResource(id = R.drawable.logo_sona),
                 contentDescription = "Sona Logo",
                 modifier = Modifier
-                    .size(84.dp)
+                    .size(180.dp)
                     .clip(CircleShape)
             )
         }

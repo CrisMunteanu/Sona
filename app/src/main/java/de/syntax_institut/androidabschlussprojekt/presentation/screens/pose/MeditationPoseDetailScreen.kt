@@ -75,7 +75,7 @@ fun MeditationPoseDetailScreen(poseId: Int, navController: NavController) {
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // ⭐ Schöner Button
+                // Schöner Button
                 Button(
                     onClick = { navController.navigate("meditation_history") },
                     colors = ButtonDefaults.buttonColors(containerColor = ElegantRed),
@@ -93,13 +93,13 @@ fun MeditationPoseDetailScreen(poseId: Int, navController: NavController) {
                     Text("Meditationsverlauf anzeigen", color = VintageWhite)
                 }
 
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 Image(
                     painter = painterResource(id = R.drawable.logo_sona),
                     contentDescription = "Sona Logo",
                     modifier = Modifier
-                        .size(90.dp)
+                        .size(180.dp)
                         .clip(CircleShape)
                 )
             } else {

@@ -63,7 +63,7 @@ fun QuotesGalleryScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = ElegantRed)
             ) {
                 Text(
-                    text = "❤️ Lieblingszitate anzeigen",
+                    text = "Lieblingszitate anzeigen",
                     color = Color.White
                 )
             }

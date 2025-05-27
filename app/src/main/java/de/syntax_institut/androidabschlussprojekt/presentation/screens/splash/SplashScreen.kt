@@ -9,7 +9,6 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,10 +20,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -44,7 +41,6 @@ fun SplashScreen(navController: NavController) {
     val scope = rememberCoroutineScope()
     var logoVisible by remember { mutableStateOf(false) }
 
-
     val infiniteTransition = rememberInfiniteTransition(label = "rotation")
     val rotation by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -56,10 +52,9 @@ fun SplashScreen(navController: NavController) {
         label = "rotation"
     )
 
-
     LaunchedEffect(Unit) {
         logoVisible = true
-        delay(2500)
+        delay(3000)
 
         val hasSeenOnboarding = SettingsDataStore.getOnboardingSeen(context)
 
@@ -73,7 +68,7 @@ fun SplashScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF4E7CD)),
+            .background(Color(0xFFFAF4E6)), // 🎨 VintageWhite
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -81,7 +76,6 @@ fun SplashScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-
             AnimatedVisibility(
                 visible = logoVisible,
                 enter = fadeIn(tween(1000)),
@@ -89,42 +83,21 @@ fun SplashScreen(navController: NavController) {
             ) {
                 Box(
                     modifier = Modifier
-                        .size(260.dp)
+                        .size(280.dp)
                         .graphicsLayer(rotationZ = rotation),
                     contentAlignment = Alignment.Center
                 ) {
-                    Canvas(modifier = Modifier.fillMaxSize()) {
-                        drawCircle(
-                            brush = Brush.sweepGradient(
-                                listOf(
-                                    Color(0xFF692621),
-                                    Color(0xFF9C5248),
-                                    Color(0xFFE29588),
-                                    Color(0xFF692621)
-                                )
-                            ),
-                            style = Stroke(width = 12f)
-                        )
-                    }
-
-                    Box(
+                    Image(
+                        painter = painterResource(id = R.drawable.logo_sona),
+                        contentDescription = stringResource(R.string.app_name),
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(12.dp)
-                            .clip(CircleShape),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.logo_sona),
-                            contentDescription = stringResource(R.string.app_name),
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
+                            .clip(CircleShape)
+                    )
                 }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
-
 
             AnimatedVisibility(
                 visible = logoVisible,
@@ -133,13 +106,12 @@ fun SplashScreen(navController: NavController) {
             ) {
                 Text(
                     text = stringResource(R.string.splash_quote),
-                    color = Color(0xFF692621),
+                    color = Color(0xFF692621), // gleich wie vorher
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(horizontal = 32.dp),
                     textAlign = TextAlign.Center
                 )
             }
-
 
             if (BuildConfig.DEBUG) {
                 Spacer(modifier = Modifier.height(32.dp))
