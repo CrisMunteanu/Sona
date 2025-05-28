@@ -132,10 +132,8 @@ fun AudioPlayerScreen(
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(240.dp)
-                .aspectRatio(1f)
                 .clip(CircleShape)
-                .border(1.dp, SoftPurple, CircleShape)
-                .padding(2.dp)
+                .border(3.dp, ElegantRed.copy(alpha = 0.4f), CircleShape)
         )
 
         Spacer(modifier = Modifier.height(8.dp))

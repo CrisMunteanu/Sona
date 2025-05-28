@@ -56,7 +56,7 @@ fun MeditationPoseDetailScreen(poseId: Int, navController: NavController) {
                     modifier = Modifier
                         .size(240.dp)
                         .aspectRatio(1f)
-                        .border(1.dp, SoftPurple, CircleShape)
+                        .border(2.dp, ElegantRed.copy(alpha = 0.4f), CircleShape)
                         .clip(CircleShape)
                         .padding(2.dp)
                 )
