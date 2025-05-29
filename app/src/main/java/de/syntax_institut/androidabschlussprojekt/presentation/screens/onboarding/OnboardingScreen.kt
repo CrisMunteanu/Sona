@@ -2,11 +2,15 @@ package de.syntax_institut.androidabschlussprojekt.presentation.screens.onboardi
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -18,6 +22,7 @@ import com.google.accompanist.pager.*
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.SettingsDataStore
 import kotlinx.coroutines.launch
+
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -51,13 +56,22 @@ fun OnboardingScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Image(
-                    painter = painterResource(id = item.imageRes),
-                    contentDescription = stringResource(id = item.title),
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(240.dp)
-                )
+                        .size(240.dp)
+                        .clip(CircleShape)
+                        .shadow(8.dp, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = item.imageRes),
+                        contentDescription = stringResource(id = item.title),
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape)
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(24.dp))
 
