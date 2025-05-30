@@ -171,7 +171,8 @@ fun FavoriteQuoteScreen(
                                                 snackbarHostState.showSnackbar("Zitat gelöscht")
                                             }
                                         }) {
-                                            Icon(Icons.Default.Delete, contentDescription = "Löschen", tint = ElegantRed)
+                                            Icon(Icons.Default.Delete, contentDescription = "Löschen",
+                                                tint = ElegantRed)
                                         }
                                     }
                                 }

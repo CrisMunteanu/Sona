@@ -24,7 +24,7 @@ fun TodaySuggestionCard(
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text("🧘 Heute für dich", fontSize = 20.sp, color = ElegantRed)
+            Text("Heute für dich :", fontSize = 20.sp, color = ElegantRed)
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -37,7 +37,7 @@ fun TodaySuggestionCard(
                 Text(
                     text = "- ${it.author ?: "Unbekannt"}",
                     fontSize = 14.sp,
-                    color = NobleBlack,
+                    color = ElegantRed,
                     modifier = Modifier.padding(top = 4.dp)
                 )
             } ?: Text("Lade Zitat...", color = SoftPurple)

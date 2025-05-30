@@ -79,7 +79,7 @@ fun JournalScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("📝 Tagebuch", color = ElegantRed) },
+                title = { Text("Tagebuch :", color = ElegantRed) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = ElegantRed)
