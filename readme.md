@@ -39,8 +39,9 @@ Füge hier am Ende die Screenshots deiner App ein.
   <img src="./img/Pose.png" width="200">
   <img src="./img/PosenScreen.png" width="200">
   <img src="./img/SettingsScreen.png" width="200"> 
-<img src="./img/MentalBenefits.png" width="200"> 
-<img src="./img/HomeScreen.png.png" width="200"> 
+  <img src="./img/MentalBenefits.png" width="200"> 
+  <img src="./img/HomeScreen.png.png" width="200"> 
+
 </p>
 
 ##  Features
