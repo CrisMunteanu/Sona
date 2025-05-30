@@ -33,14 +33,15 @@ Füge hier am Ende die Screenshots deiner App ein.
 
 <p>
   <img src="./img/SplashScreen.png" width="200">
-  <img src="./img/Onboarding%204.png" width="200">
+  <img src="./img/Onboarding.png" width="200">
   <img src="./img/StartScreen.png" width="200">
    <img src="./img/AudioPlayer.png" width="200">
   <img src="./img/Pose.png" width="200">
   <img src="./img/PosenScreen.png" width="200">
   <img src="./img/SettingsScreen.png" width="200"> 
+<img src="./img/MentalBenefits.png" width="200"> 
+<img src="./img/HomeScreen.png.png" width="200"> 
 </p>
-
 
 ##  Features
 
