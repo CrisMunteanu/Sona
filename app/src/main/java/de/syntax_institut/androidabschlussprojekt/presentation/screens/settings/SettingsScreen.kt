@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.TimePickerDialog
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
@@ -12,7 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -94,36 +92,41 @@ fun SettingsScreen(
                 color = ElegantRed
             )
 
+
             Text(stringResource(R.string.language), fontSize = 18.sp)
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                emojiLanguages.forEach { (emoji, code) ->
-                    Box(
-                        modifier = Modifier
-                            .size(54.dp)
-                            .clip(CircleShape)
-                            .background(
-                                if (selectedLanguageCode == code)
-                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
-                                else
-                                    Color.Transparent
-                            )
-                            .clickable {
+            var expanded by remember { mutableStateOf(false) }
+
+            Box {
+                OutlinedButton(
+                    onClick = { expanded = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    val currentEmoji = emojiLanguages.firstOrNull { it.second == selectedLanguageCode }?.first ?: "🌐"
+                    Text("$currentEmoji (${selectedLanguageCode.uppercase()})")
+                }
+
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surface)
+                ) {
+                    emojiLanguages.forEach { (emoji, code) ->
+                        DropdownMenuItem(
+                            text = { Text("$emoji  ${code.uppercase()}") },
+                            onClick = {
+                                expanded = false
                                 scope.launch {
                                     SettingsDataStore.saveLanguageCode(context, code)
                                     activity?.let { setLocaleAndRestart(it, code) }
                                 }
-                            },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(text = emoji, fontSize = 28.sp)
+                            }
+                        )
                     }
                 }
             }
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
