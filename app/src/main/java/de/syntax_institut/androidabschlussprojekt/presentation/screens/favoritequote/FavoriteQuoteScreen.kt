@@ -1,9 +1,11 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.favoritequote
 
 import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -19,6 +21,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.*
@@ -145,7 +151,36 @@ fun FavoriteQuoteScreen(
                             ) {
                                 Column(modifier = Modifier.padding(16.dp)) {
                                     Text("“${quote.text}”", color = SoftPurple)
-                                    Text("- ${quote.author}", color = ElegantRed)
+
+                                    // 🔗 Klickbarer Autor-Text mit Wikipedia-Link
+                                    val annotatedText = buildAnnotatedString {
+                                        append("- ")
+                                        pushStringAnnotation(tag = "AUTHOR", annotation = quote.author)
+                                        withStyle(
+                                            style = SpanStyle(
+                                                color = ElegantRed,
+                                                textDecoration = TextDecoration.Underline
+                                            )
+                                        ) {
+                                            append(quote.author)
+                                        }
+                                        pop()
+                                    }
+
+                                    ClickableText(
+                                        text = annotatedText,
+                                        onClick = { offset ->
+                                            annotatedText.getStringAnnotations("AUTHOR", offset, offset)
+                                                .firstOrNull()?.let { annotation ->
+                                                    val authorName = annotation.item
+                                                    val url = "https://en.wikipedia.org/wiki/" +
+                                                            authorName.replace(" ", "_")
+                                                    val intent = Intent(Intent.ACTION_VIEW,
+                                                        Uri.parse(url))
+                                                    context.startActivity(intent)
+                                                }
+                                        }
+                                    )
 
                                     Row(
                                         modifier = Modifier

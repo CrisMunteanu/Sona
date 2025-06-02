@@ -1,3 +1,17 @@
+
+import java.util.Properties
+import java.io.File
+
+
+val localProperties = Properties().apply {
+    load(File(rootDir, "local.properties").inputStream())
+}
+
+
+val pixabayApiKey = localProperties["PIXABAY_API_KEY"] as? String
+    ?: throw GradleException("PIXABAY_API_KEY not found in local.properties")
+
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -18,8 +32,9 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-    }
 
+        buildConfigField("String", "PIXABAY_API_KEY", "\"$pixabayApiKey\"")
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -43,6 +58,8 @@ android {
         compose = true
         buildConfig = true
     }
+
+
 }
 
 dependencies {
@@ -92,4 +109,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 }
+
+

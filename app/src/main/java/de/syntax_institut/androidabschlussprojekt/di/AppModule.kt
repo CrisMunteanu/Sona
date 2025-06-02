@@ -2,13 +2,19 @@ package de.syntax_institut.androidabschlussprojekt.di
 
 import androidx.room.Room
 import de.syntax_institut.androidabschlussprojekt.data.local.AppDatabase
+import de.syntax_institut.androidabschlussprojekt.data.remote.PixabayMusicApiService
 import de.syntax_institut.androidabschlussprojekt.data.repository.*
-import de.syntax_institut.androidabschlussprojekt.domain.remote.client.QuoteApiClient
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.*
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import de.syntax_institut.androidabschlussprojekt.BuildConfig
+import de.syntax_institut.androidabschlussprojekt.domain.remote.client.QuoteApiClient
 
 val appModule = module {
 
@@ -19,7 +25,7 @@ val appModule = module {
             AppDatabase::class.java,
             "sona_db"
         )
-            .fallbackToDestructiveMigration() // Für dev-Phase
+            .fallbackToDestructiveMigration()
             .build()
     }
 
@@ -32,6 +38,28 @@ val appModule = module {
     // API-Clients
     single { QuoteApiClient(context = androidContext()) }
 
+    // Pixabay API Setup
+    single {
+        val logging = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build()
+    }
+
+    single<Retrofit> {
+        Retrofit.Builder()
+            .baseUrl("https://pixabay.com/")
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    single<PixabayMusicApiService> {
+        get<Retrofit>().create(PixabayMusicApiService::class.java)
+    }
+
     // Repositories
     single { QuoteRepository(client = get()) }
     single { ZenQuotesRepository() }
@@ -39,6 +67,13 @@ val appModule = module {
     single { JournalRepository(get()) }
     single { FavoriteQuoteRepository(get()) }
     single { MeditationHistoryRepository(get()) }
+    single {
+        val apiKey: String = BuildConfig.PIXABAY_API_KEY
+        PixabayMusicRepository(
+            pixabayMusicApiService = get(),
+            apiKey = apiKey
+        )
+    }
 
     // ViewModels
     viewModel {
@@ -49,15 +84,8 @@ val appModule = module {
         )
     }
 
-    viewModel {
-        JournalViewModel(journalRepository = get())
-    }
-
-    viewModel {
-        FavoriteQuoteViewModel(repository = get())
-    }
-
-    viewModel {
-        MeditationHistoryViewModel(repository = get())
-    }
+    viewModel { JournalViewModel(journalRepository = get()) }
+    viewModel { FavoriteQuoteViewModel(repository = get()) }
+    viewModel { MeditationHistoryViewModel(repository = get()) }
+    viewModel { PixabayMusicViewModel(repository = get()) }
 }
