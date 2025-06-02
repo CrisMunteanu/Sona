@@ -1,8 +1,9 @@
 package de.syntax_institut.androidabschlussprojekt.data.repository
 
 import de.syntax_institut.androidabschlussprojekt.data.remote.NasaApiService
-import de.syntax_institut.androidabschlussprojekt.data.remote.dto.toNasaPicture
+
 import de.syntax_institut.androidabschlussprojekt.domain.model.NasaPicture
+import de.syntax_institut.androidabschlussprojekt.domain.util.toNasaPicture
 
 
 class NasaRepositoryImpl(

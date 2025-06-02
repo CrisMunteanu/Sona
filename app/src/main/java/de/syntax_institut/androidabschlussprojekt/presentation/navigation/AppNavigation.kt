@@ -31,6 +31,8 @@ import android.net.Uri
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.pixabay.PixabayMusicScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.streamplayer.StreamPlayerScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.nasa.NasaPictureScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.player.AudioPlayerOnlineScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.cosmic.CosmicMeditationScreen
 
 @Composable
 fun AppNavigation(
@@ -149,6 +151,11 @@ fun AppNavigation(
         //Atmung
         composable("breathing") { BreathingScreen() }
 
+        // Kosmische Meditation (NASA APOD)
+        composable("cosmic_meditation") {
+            CosmicMeditationScreen(navController = navController)
+        }
+
         //NASA
         composable("nasa") { NasaPictureScreen() }
 
@@ -163,5 +170,19 @@ fun AppNavigation(
         // Favoriten
         composable("home") { HomeScreen(navController) }
         composable("favorites") { FavoritesScreen(navController) }
+
+        composable(
+            "playerOnline/{fileName}/{imageUrl}/{title}",
+            arguments = listOf(
+                navArgument("fileName") { type = NavType.StringType },
+                navArgument("imageUrl") { type = NavType.StringType },
+                navArgument("title") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val fileName = backStackEntry.arguments?.getString("fileName") ?: ""
+            val imageUrl = backStackEntry.arguments?.getString("imageUrl") ?: ""
+            val title = backStackEntry.arguments?.getString("title") ?: ""
+            AudioPlayerOnlineScreen(fileName, imageUrl, title, navController)
+        }
     }
 }

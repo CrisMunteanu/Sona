@@ -25,4 +25,13 @@ class FavoritesRepository(
     suspend fun isFavorite(item: MeditationItem): Boolean {
         return dao.isFavorite(item.audioFile)
     }
+
+    //Neu hinzufügen:
+    suspend fun addFavorite(item: MeditationItem) {
+        dao.insertFavorite(item.toFavoriteEntity())
+    }
+
+    suspend fun removeFavorite(item: MeditationItem) {
+        dao.deleteFavorite(item.toFavoriteEntity())
+    }
 }

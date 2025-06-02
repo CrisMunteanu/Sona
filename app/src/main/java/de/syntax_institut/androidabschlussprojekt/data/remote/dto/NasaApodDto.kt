@@ -1,6 +1,8 @@
 package de.syntax_institut.androidabschlussprojekt.data.remote.dto
 
+import de.syntax_institut.androidabschlussprojekt.domain.model.CosmicMeditationApod
 import de.syntax_institut.androidabschlussprojekt.domain.model.NasaPicture
+import de.syntax_institut.androidabschlussprojekt.domain.model.getRandomSpaceAudioFile
 
 
 data class NasaApodDto(
@@ -10,11 +12,13 @@ data class NasaApodDto(
     val date: String
 )
 
-fun NasaApodDto.toNasaPicture(): NasaPicture {
-    return NasaPicture(
+
+fun NasaPicture.toCosmicMeditationApod(): CosmicMeditationApod {
+    return CosmicMeditationApod(
         title = title,
         explanation = explanation,
-        url = url,
-        date = date
+        imageUrl = url,
+        date = date,
+        audioFile = getRandomSpaceAudioFile() // ← hier wird’s verwendet
     )
 }

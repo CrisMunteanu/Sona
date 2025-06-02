@@ -16,6 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import de.syntax_institut.androidabschlussprojekt.BuildConfig
 import de.syntax_institut.androidabschlussprojekt.data.remote.NasaApiService
 import de.syntax_institut.androidabschlussprojekt.domain.remote.client.QuoteApiClient
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.cosmic.CosmicMeditationViewModel
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.nasa.NasaPictureViewModel
 
 val appModule = module {
@@ -108,4 +109,5 @@ val appModule = module {
     viewModel { MeditationHistoryViewModel(repository = get()) }
     viewModel { PixabayMusicViewModel(repository = get()) }
     viewModel { NasaPictureViewModel(repository = get()) }
+    viewModel { CosmicMeditationViewModel(get()) }
 }
