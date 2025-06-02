@@ -19,16 +19,20 @@ fun BottomBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    // Zentrale Liste der Tabs
+    val items = listOf(
+        BottomNavItem.Home,
+        BottomNavItem.Favorites,
+        BottomNavItem.Poses,
+        BottomNavItem.Nasa,
+        BottomNavItem.Settings
+    )
+
     NavigationBar(
         containerColor = VintageWhite,
         tonalElevation = 2.dp
     ) {
-        listOf(
-            BottomNavItem.Home,
-            BottomNavItem.Favorites,
-            BottomNavItem.Poses,
-            BottomNavItem.Settings
-        ).forEach { item ->
+        items.forEach { item ->
             val isSelected = currentRoute == item.route
 
             NavigationBarItem(
@@ -52,9 +56,11 @@ fun BottomBar(navController: NavController) {
                 label = {
                     Text(
                         text = item.label,
+                        style = MaterialTheme.typography.bodySmall,
                         color = if (isSelected) ElegantRed else Color.Gray
                     )
-                }
+                },
+                alwaysShowLabel = true
             )
         }
     }

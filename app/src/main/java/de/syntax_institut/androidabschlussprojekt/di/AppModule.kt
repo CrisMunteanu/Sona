@@ -14,7 +14,9 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import de.syntax_institut.androidabschlussprojekt.BuildConfig
+import de.syntax_institut.androidabschlussprojekt.data.remote.NasaApiService
 import de.syntax_institut.androidabschlussprojekt.domain.remote.client.QuoteApiClient
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.nasa.NasaPictureViewModel
 
 val appModule = module {
 
@@ -75,6 +77,23 @@ val appModule = module {
         )
     }
 
+    single<NasaApiService> {
+        Retrofit.Builder()
+            .baseUrl("https://api.nasa.gov/")
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(NasaApiService::class.java)
+    }
+
+    single<NasaRepository> {
+        val apiKey = BuildConfig.NASA_API_KEY
+        NasaRepositoryImpl(
+            apiService = get(),
+            apiKey = apiKey
+        )
+    }
+
     // ViewModels
     viewModel {
         MainViewModel(
@@ -88,4 +107,5 @@ val appModule = module {
     viewModel { FavoriteQuoteViewModel(repository = get()) }
     viewModel { MeditationHistoryViewModel(repository = get()) }
     viewModel { PixabayMusicViewModel(repository = get()) }
+    viewModel { NasaPictureViewModel(repository = get()) }
 }

@@ -11,6 +11,9 @@ val localProperties = Properties().apply {
 val pixabayApiKey = localProperties["PIXABAY_API_KEY"] as? String
     ?: throw GradleException("PIXABAY_API_KEY not found in local.properties")
 
+val nasaApiKey = localProperties["NASA_API_KEY"] as? String
+    ?: throw GradleException("NASA_API_KEY not found in local.properties")
+
 
 plugins {
     alias(libs.plugins.android.application)
@@ -34,6 +37,8 @@ android {
 
 
         buildConfigField("String", "PIXABAY_API_KEY", "\"$pixabayApiKey\"")
+
+        buildConfigField("String", "NASA_API_KEY", "\"$nasaApiKey\"")
     }
     buildTypes {
         release {

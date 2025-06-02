@@ -3,6 +3,7 @@ package de.syntax_institut.androidabschlussprojekt.presentation.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.SelfImprovement
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -16,4 +17,5 @@ sealed class BottomNavItem(
     object Favorites : BottomNavItem("favorites", Icons.Filled.Favorite, "Favoriten")
     object Poses : BottomNavItem("pose_list", Icons.Filled.SelfImprovement, "Posen")
     object Settings : BottomNavItem("settings", Icons.Filled.Settings, "Einstellungen")
+    object Nasa : BottomNavItem("nasa", Icons.Filled.Image, "NASA")
 }

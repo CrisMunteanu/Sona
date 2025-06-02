@@ -30,6 +30,7 @@ import de.syntax_institut.androidabschlussprojekt.domain.model.MeditationItem
 import android.net.Uri
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.pixabay.PixabayMusicScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.streamplayer.StreamPlayerScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.nasa.NasaPictureScreen
 
 @Composable
 fun AppNavigation(
@@ -147,6 +148,9 @@ fun AppNavigation(
 
         //Atmung
         composable("breathing") { BreathingScreen() }
+
+        //NASA
+        composable("nasa") { NasaPictureScreen() }
 
         // Einstellungen
         composable("settings") {
