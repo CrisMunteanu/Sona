@@ -1,15 +1,23 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.nasa
 
-import coil3.compose.AsyncImage
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil3.compose.rememberAsyncImagePainter
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.NobleBlack
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -35,30 +43,46 @@ fun NasaPictureScreen(
             }
 
             picture != null -> {
+                val image = picture!!
+
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp)
-                        .verticalScroll(rememberScrollState())
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Text(
-                        text = picture!!.title,
-                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    AsyncImage(
-                        model = picture!!.url,
-                        contentDescription = picture!!.title,
+                    Image(
+                        painter = rememberAsyncImagePainter(
+                            ImageRequest.Builder(LocalContext.current)
+                                .data(image.url)
+                                .crossfade(true)
+                                .build()
+                        ),
+                        contentDescription = image.title,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(250.dp)
+                            .height(240.dp)
+                            .clip(RoundedCornerShape(16.dp)),
+                        contentScale = ContentScale.Crop
                     )
 
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = picture!!.date, style = MaterialTheme.typography.bodySmall)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = picture!!.explanation)
+                    Text(
+                        text = image.title,
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = NobleBlack
+                    )
+
+                    Text(
+                        text = image.date,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.Gray
+                    )
+
+                    Text(
+                        text = image.explanation,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
             }
         }

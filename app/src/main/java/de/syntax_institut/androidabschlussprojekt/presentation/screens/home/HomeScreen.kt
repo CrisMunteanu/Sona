@@ -25,6 +25,7 @@ import de.syntax_institut.androidabschlussprojekt.presentation.components.MoodSu
 import de.syntax_institut.androidabschlussprojekt.presentation.components.QuoteGalleryCard
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MainViewModel
 import de.syntax_institut.androidabschlussprojekt.presentation.components.JournalButton
+import de.syntax_institut.androidabschlussprojekt.presentation.components.StartScreenCard
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
 import org.koin.androidx.compose.koinViewModel
@@ -40,6 +41,14 @@ fun HomeScreen(navController: NavController) {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        item {
+            StartScreenCard(
+                onClick = {
+                    navController.navigate("start")
+                }
+            )
+        }
+
 
         //  Atemübung (Card)
         item {
@@ -98,7 +107,7 @@ fun HomeScreen(navController: NavController) {
             }
         }
 
-        // 🎵 Alle Meditations-Kategorien
+        //Alle Meditations-Kategorien
         items(categories) { item ->
             MeditationCard(item = item) {
                 navController.navigate("player/${item.audioFile}/${item.imageResId}")
