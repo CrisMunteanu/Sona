@@ -33,6 +33,7 @@ import de.syntax_institut.androidabschlussprojekt.presentation.screens.streampla
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.nasa.NasaPictureScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.player.AudioPlayerOnlineScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.cosmic.CosmicMeditationScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.yogaradio.YogaRadioScreen
 
 @Composable
 fun AppNavigation(
@@ -184,5 +185,9 @@ fun AppNavigation(
             val title = backStackEntry.arguments?.getString("title") ?: ""
             AudioPlayerOnlineScreen(fileName, imageUrl, title, navController)
         }
+        composable("yoga_radio") {
+            YogaRadioScreen()
+        }
+
     }
 }

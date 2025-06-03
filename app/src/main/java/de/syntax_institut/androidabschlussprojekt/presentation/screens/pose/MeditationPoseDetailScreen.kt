@@ -23,6 +23,7 @@ import mockMeditationPoses
 
 import androidx.compose.ui.layout.ContentScale
 import androidx.navigation.NavController
+import de.syntax_institut.androidabschlussprojekt.presentation.components.YogaRadioCard
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,14 +69,15 @@ fun MeditationPoseDetailScreen(poseId: Int, navController: NavController) {
                 )
 
                 Text(
-                    text = pose.longDescription ?: "Diese Haltung unterstützt die innere Ausrichtung...",
+                    text = pose.longDescription
+                        ?: "Diese Haltung unterstützt die innere Ausrichtung...",
                     style = MaterialTheme.typography.bodyMedium.copy(fontSize = 15.sp),
                     color = NobleBlack
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Schöner Button
+                // Verlauf Button
                 Button(
                     onClick = { navController.navigate("meditation_history") },
                     colors = ButtonDefaults.buttonColors(containerColor = ElegantRed),
@@ -91,6 +93,11 @@ fun MeditationPoseDetailScreen(poseId: Int, navController: NavController) {
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("Meditationsverlauf anzeigen", color = VintageWhite)
+                }
+
+                // Yoga-Radio Card
+                YogaRadioCard {
+                    navController.navigate("yoga_radio")
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))

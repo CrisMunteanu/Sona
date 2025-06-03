@@ -9,6 +9,7 @@ sealed class Screen(val route: String) {
     object Start : Screen("start")
     object Home : Screen("home")
     object Favorites : Screen("favorites")
+    object YogaRadio : Screen("yoga_radio")
 
     data class Player(val fileName: String, val imageResId: Int) :
         Screen("player/$fileName/$imageResId") {

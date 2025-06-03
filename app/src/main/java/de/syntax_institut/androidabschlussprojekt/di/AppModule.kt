@@ -18,6 +18,9 @@ import de.syntax_institut.androidabschlussprojekt.data.remote.NasaApiService
 import de.syntax_institut.androidabschlussprojekt.domain.remote.client.QuoteApiClient
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.cosmic.CosmicMeditationViewModel
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.nasa.NasaPictureViewModel
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.yogaradio.YogaRadioViewModel
+
+
 
 val appModule = module {
 
@@ -94,6 +97,8 @@ val appModule = module {
             apiKey = apiKey
         )
     }
+    single { YogaRadioViewModel() }
+
 
     // ViewModels
     viewModel {
@@ -110,4 +115,5 @@ val appModule = module {
     viewModel { PixabayMusicViewModel(repository = get()) }
     viewModel { NasaPictureViewModel(repository = get()) }
     viewModel { CosmicMeditationViewModel(get()) }
+    viewModel { YogaRadioViewModel() }
 }
