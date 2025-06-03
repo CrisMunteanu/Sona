@@ -15,9 +15,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,47 +22,15 @@ import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.NobleBlack
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
 import androidx.compose.material3.Icon
-import android.media.AudioAttributes
-import android.media.MediaPlayer
-import android.util.Log
-import android.widget.Toast
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun YogaRadioScreen() {
+fun YogaRadioScreen(viewModel: YogaRadioViewModel = koinViewModel()) {
     val context = LocalContext.current
-    var isPlaying by remember { mutableStateOf(false) }
-    val mediaPlayer = remember { MediaPlayer() }
-
-    // Direkter MP3-Stream von SomaFM-Drone Zone(ambient/Meditativ)
-    val streamUrl = "https://ice4.somafm.com/dronezone-128-mp3"
-
-    // Initialisiere den MediaPlayer beim Start
-    LaunchedEffect(Unit) {
-        try {
-            mediaPlayer.setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
-            )
-            mediaPlayer.setDataSource(streamUrl)
-            mediaPlayer.prepareAsync()
-        } catch (e: Exception) {
-            Log.e("YogaRadio", "Fehler beim Initialisieren: ${e.message}")
-        }
-    }
-
-    // Medienwiedergabe-Logik
-    DisposableEffect(Unit) {
-        onDispose {
-            mediaPlayer.stop()
-            mediaPlayer.release()
-        }
-    }
+    val isPlaying by viewModel.isPlaying.collectAsState()
 
     Column(
         modifier = Modifier
@@ -92,19 +57,7 @@ fun YogaRadioScreen() {
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = {
-                try {
-                    if (isPlaying) {
-                        mediaPlayer.pause()
-                    } else {
-                        mediaPlayer.start()
-                    }
-                    isPlaying = !isPlaying
-                } catch (e: Exception) {
-                    Toast.makeText(context, "Fehler beim Abspielen", Toast.LENGTH_SHORT).show()
-                    Log.e("YogaRadio", "Fehler: ${e.message}")
-                }
-            },
+            onClick = { viewModel.togglePlayback(context) },
             colors = ButtonDefaults.buttonColors(containerColor = ElegantRed)
         ) {
             Text(
