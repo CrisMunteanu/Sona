@@ -1,14 +1,21 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.pose
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,14 +29,19 @@ import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
 import mockMeditationPoses
 
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import de.syntax_institut.androidabschlussprojekt.presentation.components.YogaRadioCard
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
+import androidx.core.net.toUri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MeditationPoseDetailScreen(poseId: Int, navController: NavController) {
     val pose = mockMeditationPoses.find { it.id == poseId }
+    val context = LocalContext.current
+    val expanded = remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
 
     Scaffold(
         topBar = {
@@ -43,6 +55,7 @@ fun MeditationPoseDetailScreen(poseId: Int, navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(scrollState)
                 .padding(padding)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -50,6 +63,7 @@ fun MeditationPoseDetailScreen(poseId: Int, navController: NavController) {
         ) {
             if (pose != null) {
 
+                // Bild
                 Image(
                     painter = painterResource(id = pose.imageRes),
                     contentDescription = pose.name,
@@ -62,22 +76,56 @@ fun MeditationPoseDetailScreen(poseId: Int, navController: NavController) {
                         .padding(2.dp)
                 )
 
+                //Kurzbeschreibung
                 Text(
                     text = pose.description,
                     style = MaterialTheme.typography.bodyLarge,
                     color = SoftPurple
                 )
 
+                //Lange Beschreibung (ausklappbar)
                 Text(
-                    text = pose.longDescription
-                        ?: "Diese Haltung unterstützt die innere Ausrichtung...",
-                    style = MaterialTheme.typography.bodyMedium.copy(fontSize = 15.sp),
+                    text = if (expanded.value) pose.longDescription else pose.longDescription.take(200) + "...",
+                    style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
                     color = NobleBlack
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                TextButton(onClick = { expanded.value = !expanded.value }) {
+                    Text(
+                        text = if (expanded.value) "Weniger anzeigen" else "Mehr anzeigen",
+                        color = ElegantRed
+                    )
+                }
 
-                // Verlauf Button
+                // YouTube-Button mit Fallback
+                Button(
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(pose.youtubeUrl))
+                        intent.setPackage("com.google.android.youtube")
+                        if (intent.resolveActivity(context.packageManager) != null) {
+                            context.startActivity(intent)
+                        } else {
+                            // Fallback: Öffne im Browser
+                            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(pose.youtubeUrl))
+                            context.startActivity(browserIntent)
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = ElegantRed),
+                    shape = RoundedCornerShape(20),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.PlayArrow,
+                        contentDescription = "YouTube Video",
+                        tint = VintageWhite
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("YouTube-Video zur Haltung", color = VintageWhite)
+                }
+
+                // Verlauf anzeigen
                 Button(
                     onClick = { navController.navigate("meditation_history") },
                     colors = ButtonDefaults.buttonColors(containerColor = ElegantRed),
@@ -95,11 +143,12 @@ fun MeditationPoseDetailScreen(poseId: Int, navController: NavController) {
                     Text("Meditationsverlauf anzeigen", color = VintageWhite)
                 }
 
-                // Yoga-Radio Card
+                //Yoga-Radio
                 YogaRadioCard {
                     navController.navigate("yoga_radio")
                 }
 
+                //Sona-Logo
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Image(
