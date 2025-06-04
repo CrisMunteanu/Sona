@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import de.syntax_institut.androidabschlussprojekt.presentation.components.BreathingCard
+import de.syntax_institut.androidabschlussprojekt.presentation.components.CosmicMeditationButton
 import de.syntax_institut.androidabschlussprojekt.presentation.components.MeditationCard
 import de.syntax_institut.androidabschlussprojekt.presentation.components.MoodSuggestionCard
 import de.syntax_institut.androidabschlussprojekt.presentation.components.QuoteGalleryCard
@@ -81,29 +82,8 @@ fun HomeScreen(navController: NavController) {
 
         //Kosmische Meditation
         item {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { navController.navigate("cosmic_meditation") },
-                colors = CardDefaults.cardColors(containerColor = ElegantRed),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = "🌌 Kosmische Meditation",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.White
-                    )
-                    Text(
-                        text = "Täglich neue Bilder vom Universum mit beruhigender Musik.",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White.copy(alpha = 0.8f)
-                    )
-                }
+            CosmicMeditationButton {
+                navController.navigate("cosmic_meditation")
             }
         }
 
