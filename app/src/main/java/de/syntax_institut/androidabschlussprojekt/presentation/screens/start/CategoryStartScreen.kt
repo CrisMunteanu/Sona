@@ -1,6 +1,8 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.start
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -24,7 +26,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
@@ -90,7 +92,6 @@ fun CategoryStartScreen(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-
         Button(
             onClick = onPixabayClicked,
             modifier = Modifier
@@ -104,16 +105,21 @@ fun CategoryStartScreen(
             Text("🌐 Online-Meditationen")
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        Image(
-            painter = painterResource(id = R.drawable.placeholder_image),
-            contentDescription = "Startbild",
+        Box(
             modifier = Modifier
-                .padding(top = 16.dp)
-                .clip(RoundedCornerShape(24.dp))
                 .fillMaxWidth()
                 .height(220.dp)
-        )
+                .clip(RoundedCornerShape(24.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.placeholder_image),
+                contentDescription = "Startbild",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.matchParentSize()
+            )
+        }
     }
 }
