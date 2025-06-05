@@ -21,8 +21,10 @@ import androidx.navigation.NavController
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.*
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MainViewModel
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.shape.RoundedCornerShape
 
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -51,7 +53,8 @@ fun MoodSuggestionCard(
         modifier = Modifier
             .fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = VintageWhite),
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(4.dp),
+
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
 
@@ -72,7 +75,7 @@ fun MoodSuggestionCard(
                 Text(
                     text = "Wie fühlst du dich heute?",
                     fontSize = 20.sp,
-                    color = NobleBlack
+                    color = SoftPurple
                 )
             }
 

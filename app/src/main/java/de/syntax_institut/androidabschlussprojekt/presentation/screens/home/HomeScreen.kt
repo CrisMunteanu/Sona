@@ -50,6 +50,13 @@ fun HomeScreen(navController: NavController) {
             )
         }
 
+        // Stimmung + Vorschlag
+        item {
+            MoodSuggestionCard(
+                navController = navController,
+                viewModel = viewModel
+            )
+        }
 
         //  Atemübung (Card)
         item {
@@ -72,13 +79,6 @@ fun HomeScreen(navController: NavController) {
             }
         }
 
-        // Stimmung + Vorschlag
-        item {
-            MoodSuggestionCard(
-                navController = navController,
-                viewModel = viewModel
-            )
-        }
 
         //Kosmische Meditation
         item {

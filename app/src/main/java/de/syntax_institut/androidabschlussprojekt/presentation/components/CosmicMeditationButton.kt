@@ -28,7 +28,7 @@ fun CosmicMeditationButton(onClick: () -> Unit) {
         shape = RoundedCornerShape(50),
         modifier = Modifier
             .fillMaxWidth()
-            .height(60.dp),
+            .height(80.dp),
         colors = ButtonDefaults.buttonColors(containerColor = ElegantRed)
     ) {
         Row(
