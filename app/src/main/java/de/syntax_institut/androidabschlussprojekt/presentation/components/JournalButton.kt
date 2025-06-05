@@ -29,6 +29,7 @@ fun JournalButton(onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .height(80.dp)
             .scale(scale)
             .clickable(
                 onClick = {
@@ -56,12 +57,12 @@ fun JournalButton(onClick: () -> Unit) {
             Column {
                 Text(
                     text = "Tagebuch",
-                    fontSize = 20.sp,
+                    fontSize = 24.sp,
                     color = VintageWhite
                 )
                 Text(
                     text = "Deine Gedanken festhalten",
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     color = VintageWhite
                 )
             }

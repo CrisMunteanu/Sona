@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material3.Button
@@ -22,6 +23,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
@@ -85,7 +88,7 @@ fun CategoryStartScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
 
         Button(
@@ -97,19 +100,20 @@ fun CategoryStartScreen(
             colors = ButtonDefaults.buttonColors(containerColor = ElegantRed)
         ) {
             Icon(Icons.Default.Cloud, contentDescription = "Online Musik")
-            Spacer(modifier = Modifier.width(10.dp))
+            Spacer(modifier = Modifier.width(16.dp))
             Text("🌐 Online-Meditationen")
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         Image(
             painter = painterResource(id = R.drawable.placeholder_image),
             contentDescription = "Startbild",
             modifier = Modifier
+                .padding(top = 16.dp)
+                .clip(RoundedCornerShape(24.dp))
                 .fillMaxWidth()
                 .height(220.dp)
-                .padding(top = 16.dp)
         )
     }
 }
