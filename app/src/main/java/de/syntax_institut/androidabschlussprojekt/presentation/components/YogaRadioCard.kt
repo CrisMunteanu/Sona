@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
 
 @Composable
@@ -48,7 +49,8 @@ fun YogaRadioCard(onClick: () -> Unit) {
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text("Yoga Radio", style = MaterialTheme.typography.titleMedium, color = ElegantRed)
-                Text("Live Meditationsmusik vom Webradio", style = MaterialTheme.typography.bodySmall)
+                Text("Live Meditationsmusik vom Webradio",
+                    style = MaterialTheme.typography.bodySmall , color = SoftPurple)
             }
         }
     }
