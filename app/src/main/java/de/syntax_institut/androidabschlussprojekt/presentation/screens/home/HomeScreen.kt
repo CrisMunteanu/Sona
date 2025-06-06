@@ -65,7 +65,7 @@ fun HomeScreen(navController: NavController) {
             )
         }
 
-        // Zitate-Galerie (Card)
+        // Zitate-Galerie
         item {
             QuoteGalleryCard(
                 onClick = { navController.navigate("quotes") }

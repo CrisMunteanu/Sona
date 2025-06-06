@@ -20,6 +20,7 @@ import de.syntax_institut.androidabschlussprojekt.domain.model.MeditationItem
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.NobleBlack
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.OceanBlue
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
 
 @Composable
 fun FavoriteCard(
@@ -53,6 +54,8 @@ fun FavoriteCard(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() },
+        colors = CardDefaults.cardColors(
+            containerColor = VintageWhite),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Row(
@@ -60,7 +63,7 @@ fun FavoriteCard(
                 .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Bild
+
             Image(
                 painter = painterResource(id = item.imageResId),
                 contentDescription = item.title,

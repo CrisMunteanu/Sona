@@ -156,6 +156,8 @@ fun MeditationPoseDetailScreen(poseId: Int, navController: NavController) {
                         Text("Meditationsverlauf anzeigen", color = VintageWhite)
                     }
 
+                    Spacer(modifier = Modifier.height(16.dp))
+
                     //Yoga-Radio
                     YogaRadioCard {
                         navController.navigate("yoga_radio")
