@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import de.syntax_institut.androidabschlussprojekt.presentation.navigation.BottomNavItem
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.AppBackground
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.NobleBlack
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
@@ -29,8 +30,8 @@ fun BottomBar(navController: NavController) {
     )
 
     NavigationBar(
-        containerColor = VintageWhite,
-        tonalElevation = 2.dp
+        containerColor = AppBackground,
+        tonalElevation = 1.dp
     ) {
         items.forEach { item ->
             val isSelected = currentRoute == item.route
