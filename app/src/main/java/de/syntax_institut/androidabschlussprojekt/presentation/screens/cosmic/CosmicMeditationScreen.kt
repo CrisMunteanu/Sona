@@ -3,7 +3,9 @@ package de.syntax_institut.androidabschlussprojekt.presentation.screens.cosmic
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,8 +26,7 @@ import org.koin.androidx.compose.koinViewModel
 fun CosmicMeditationScreen(
     navController: NavController,
     viewModel: CosmicMeditationViewModel = koinViewModel()
-)
- {
+) {
     val cosmicMeditation by viewModel.cosmicMeditation.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val error by viewModel.error.collectAsState()
@@ -49,7 +50,8 @@ fun CosmicMeditationScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Image(
@@ -93,7 +95,6 @@ fun CosmicMeditationScreen(
         }
 
         else -> {
-            // Initialzustand oder leeres UI
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text("Keine Daten verfügbar")
             }
