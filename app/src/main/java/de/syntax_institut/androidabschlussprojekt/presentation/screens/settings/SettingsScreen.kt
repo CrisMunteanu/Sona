@@ -22,6 +22,8 @@ import de.syntax_institut.androidabschlussprojekt.domain.util.NotificationHelper
 import de.syntax_institut.androidabschlussprojekt.domain.util.setLocaleAndRestart
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.lazy.LazyColumn
+
 
 @Composable
 fun SettingsScreen(
@@ -52,7 +54,8 @@ fun SettingsScreen(
         "🇪🇸" to "es"
     )
 
-    val timeText = String.format("%02d:%02d", reminderHour, reminderMinute)
+    val timeText = String.format(
+        "%02d:%02d", reminderHour, reminderMinute)
 
     val timePickerDialog = remember {
         TimePickerDialog(
@@ -79,162 +82,182 @@ fun SettingsScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(24.dp)
                 .padding(innerPadding),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+            verticalArrangement = Arrangement.spacedBy(24.dp),
+            horizontalAlignment = Alignment.Start
         ) {
-            Text(
-                text = stringResource(R.string.settings),
-                style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp),
-                color = ElegantRed
-            )
+            item {
+                Text(
+                    text = stringResource(R.string.settings),
+                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp),
+                    color = ElegantRed
+                )
+            }
 
+            item {
+                Text(stringResource(R.string.language), fontSize = 18.sp)
+                var expanded by remember { mutableStateOf(false) }
 
-            Text(stringResource(R.string.language), fontSize = 18.sp)
+                Box {
+                    OutlinedButton(
+                        onClick = { expanded = true },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        val currentEmoji = emojiLanguages.firstOrNull {
+                            it.second == selectedLanguageCode }?.first ?: "🌐"
+                        Text("$currentEmoji (${selectedLanguageCode.uppercase()})")
+                    }
 
-            var expanded by remember { mutableStateOf(false) }
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.surface)
+                    ) {
+                        emojiLanguages.forEach { (emoji, code) ->
+                            DropdownMenuItem(
+                                text = { Text("$emoji  ${code.uppercase()}") },
+                                onClick = {
+                                    expanded = false
+                                    scope.launch {
+                                        SettingsDataStore.saveLanguageCode(context, code)
+                                        activity?.let { setLocaleAndRestart(it, code) }
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
+            }
 
-            Box {
-                OutlinedButton(
-                    onClick = { expanded = true },
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(stringResource(R.string.dark_mode), fontSize = 18.sp)
+                    Switch(
+                        checked = isDarkMode,
+                        onCheckedChange = onToggleDarkMode
+                    )
+                }
+            }
+
+            item {
+                Button(
+                    onClick = {
+                        scope.launch {
+                            SettingsDataStore.setOnboardingSeen(context, false)
+                            snackbarHostState.showSnackbar(context.getString(R.string.onboarding_reset_success))
+                            activity?.recreate()
+                        }
+                    },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    val currentEmoji = emojiLanguages.firstOrNull { it.second == selectedLanguageCode }?.first ?: "🌐"
-                    Text("$currentEmoji (${selectedLanguageCode.uppercase()})")
+                    Text(stringResource(R.string.reset_onboarding))
                 }
+            }
 
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.surface)
-                ) {
-                    emojiLanguages.forEach { (emoji, code) ->
-                        DropdownMenuItem(
-                            text = { Text("$emoji  ${code.uppercase()}") },
-                            onClick = {
-                                expanded = false
+            item {
+                Text(stringResource(R.string.reminder_title), fontSize = 18.sp, color = ElegantRed)
+
+                Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(stringResource(R.string.reminder_switch_label))
+                        Switch(
+                            checked = isReminderEnabled,
+                            onCheckedChange = { isChecked ->
+                                isReminderEnabled = isChecked
                                 scope.launch {
-                                    SettingsDataStore.saveLanguageCode(context, code)
-                                    activity?.let { setLocaleAndRestart(it, code) }
+                                    SettingsDataStore.saveReminderEnabled(context, isChecked)
+
+                                    if (isChecked) {
+                                        NotificationHelper.scheduleDailyReminder(context, reminderHour, reminderMinute)
+                                        snackbarHostState.showSnackbar(
+                                            context.getString(
+                                                R.string.reminder_enabled_snackbar,
+                                                String.format("%02d:%02d", reminderHour, reminderMinute)
+                                            )
+                                        )
+                                    } else {
+                                        NotificationHelper.cancelDailyReminder(context)
+                                        snackbarHostState.showSnackbar(context.getString
+                                            (R.string.reminder_disabled_snackbar))
+                                    }
                                 }
                             }
                         )
                     }
+
+                    if (isReminderEnabled) {
+                        Text(
+                            text = stringResource(
+                                R.string.reminder_active_since,
+                                String.format
+                                    ("%02d:%02d", reminderHour, reminderMinute)
+                            ),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.75f),
+                            modifier = Modifier.padding(start = 4.dp, top = 4.dp)
+                        )
+                    }
                 }
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(stringResource(R.string.dark_mode), fontSize = 18.sp)
-                Switch(
-                    checked = isDarkMode,
-                    onCheckedChange = onToggleDarkMode
-                )
-            }
 
-            Button(
-                onClick = {
-                    scope.launch {
-                        SettingsDataStore.setOnboardingSeen(context, false)
-                        snackbarHostState.showSnackbar(context.getString(R.string.onboarding_reset_success))
-                        activity?.recreate()
-                    }
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(stringResource(R.string.reset_onboarding))
-            }
-
-            Text(stringResource(R.string.reminder_title), fontSize = 18.sp, color = ElegantRed)
-
-            Column {
+            item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(stringResource(R.string.reminder_switch_label))
-                    Switch(
-                        checked = isReminderEnabled,
-                        onCheckedChange = { isChecked ->
-                            isReminderEnabled = isChecked
-                            scope.launch {
-                                SettingsDataStore.saveReminderEnabled(context, isChecked)
-
-                                if (isChecked) {
-                                    NotificationHelper.scheduleDailyReminder(context, reminderHour, reminderMinute)
-                                    snackbarHostState.showSnackbar(
-                                        context.getString(R.string.reminder_enabled_snackbar,
-                                            String.format
-                                                ("%02d:%02d", reminderHour, reminderMinute))
-                                    )
-                                } else {
-                                    NotificationHelper.cancelDailyReminder(context)
-                                    snackbarHostState.showSnackbar(context.getString
-                                        (R.string.reminder_disabled_snackbar))
-                                }
-                            }
-                        }
-                    )
-                }
-
-                //  Statusanzeige unter dem Switch
-                if (isReminderEnabled) {
-                    Text(
-                        text = stringResource(R.string.reminder_active_since,
-                            String.format("%02d:%02d", reminderHour, reminderMinute)),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.75f),
-                        modifier = Modifier.padding(start = 4.dp, top = 4.dp)
-                    )
+                    Text(stringResource(R.string.reminder_time_label))
+                    OutlinedButton(onClick = { timePickerDialog.show() }) {
+                        Text(timeText)
+                    }
                 }
             }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(stringResource(R.string.reminder_time_label))
-                OutlinedButton(onClick = { timePickerDialog.show() }) {
-                    Text(timeText)
+            item {
+                Button(
+                    onClick = {
+                        NotificationHelper.showReminderNotification(
+                            context = context,
+                            title = context.getString(R.string.reminder_title),
+                            message = context.getString(R.string.reminder_test_message)
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("🔔 " + stringResource(R.string.send_test_notification))
                 }
             }
 
-            Button(
-                onClick = {
-                    NotificationHelper.showReminderNotification(
-                        context = context,
-                        title = context.getString(R.string.reminder_title),
-                        message = context.getString(R.string.reminder_test_message)
-                    )
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("🔔 " + stringResource(R.string.send_test_notification))
-            }
+            item {
 
-            Spacer(modifier = Modifier.height(60.dp))
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.logo_sona),
-                    contentDescription = "Sona Logo",
+                Box(
                     modifier = Modifier
-                        .size(220.dp)
-                        .clip(CircleShape)
-                )
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.logo_sona),
+                        contentDescription = "Sona Logo",
+                        modifier = Modifier
+                            .size(180.dp)
+                            .clip(CircleShape)
+                    )
+                }
             }
         }
     }

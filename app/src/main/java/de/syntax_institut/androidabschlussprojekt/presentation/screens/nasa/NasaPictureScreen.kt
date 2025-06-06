@@ -17,7 +17,9 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.NobleBlack
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -70,13 +72,13 @@ fun NasaPictureScreen(
                     Text(
                         text = image.title,
                         style = MaterialTheme.typography.headlineSmall,
-                        color = NobleBlack
+                        color = ElegantRed
                     )
 
                     Text(
                         text = image.date,
                         style = MaterialTheme.typography.bodySmall,
-                        color = Color.Gray
+                        color = SoftPurple
                     )
 
                     Text(

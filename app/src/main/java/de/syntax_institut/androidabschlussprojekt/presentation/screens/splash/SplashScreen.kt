@@ -2,11 +2,7 @@ package de.syntax_institut.androidabschlussprojekt.presentation.screens.splash
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -115,7 +111,7 @@ fun SplashScreen(navController: NavController) {
                 ) {
                     Text(
                         text = stringResource(R.string.splash_quote),
-                        color = Color(0xFF692621),
+                        color = Color(0xFFA41E22),
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.padding(horizontal = 32.dp),
                         textAlign = TextAlign.Center

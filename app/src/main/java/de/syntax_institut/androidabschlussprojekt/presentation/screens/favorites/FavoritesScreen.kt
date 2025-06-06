@@ -100,7 +100,7 @@ fun FavoritesScreen(navController: NavController) {
                     painter = painterResource(id = R.drawable.logo_sona),
                     contentDescription = "Sona Logo",
                     modifier = Modifier
-                        .size(120.dp)
+                        .size(180.dp)
                         .clip(CircleShape)
                 )
             }

@@ -24,13 +24,13 @@ fun BreathingScreen() {
 
     var isRunning by remember { mutableStateOf(false) }
     var phase by remember { mutableStateOf(context.getString(R.string.breathe_in)) }
-    var scale by remember { mutableStateOf(1f) }
-    var timeElapsed by remember { mutableStateOf(0) }
+    var scale by remember { mutableFloatStateOf(1f) }
+    var timeElapsed by remember { mutableIntStateOf(0) }
     var soundEnabled by remember { mutableStateOf(true) }
 
     // Auswahlbare Dauer (in Sekunden)
     val durationOptions = listOf(60, 180, 300)
-    var selectedDuration by remember { mutableStateOf(durationOptions[0]) }
+    var selectedDuration by remember { mutableIntStateOf(durationOptions[0]) }
     var expanded by remember { mutableStateOf(false) }
 
     val progress = timeElapsed / selectedDuration.toFloat()

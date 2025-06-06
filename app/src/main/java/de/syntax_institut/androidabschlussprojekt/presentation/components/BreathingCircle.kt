@@ -30,7 +30,7 @@ fun BreathingCircleWithLogo(
         // Luftiger Kreis mit transparenter Farbe
         Canvas(modifier = Modifier.fillMaxSize()) {
             drawCircle(
-                color = Color(0xFF692621).copy(alpha = 0.4f),
+                color = Color(0xFFA41E22).copy(alpha = 0.4f),
                 style = Stroke(width = 4f)
             )
         }

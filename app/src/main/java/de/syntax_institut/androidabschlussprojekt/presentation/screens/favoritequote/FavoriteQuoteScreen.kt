@@ -152,7 +152,7 @@ fun FavoriteQuoteScreen(
                                 Column(modifier = Modifier.padding(16.dp)) {
                                     Text("“${quote.text}”", color = SoftPurple)
 
-                                    // 🔗 Klickbarer Autor-Text mit Wikipedia-Link
+                                    //Klickbarer Autor-Text mit Wikipedia-Link
                                     val annotatedText = buildAnnotatedString {
                                         append("- ")
                                         pushStringAnnotation(tag = "AUTHOR", annotation = quote.author)
