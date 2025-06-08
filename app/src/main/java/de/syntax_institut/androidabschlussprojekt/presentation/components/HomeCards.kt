@@ -45,7 +45,7 @@ fun QuoteGalleryCard(onClick: () -> Unit) {
             Icon(
                 imageVector = Icons.Default.FormatQuote,
                 contentDescription = "Zitat Icon",
-                tint = ElegantRed, // jetzt ElegantRed!
+                tint = ElegantRed,
                 modifier = Modifier.size(36.dp)
             )
 
