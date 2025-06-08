@@ -29,7 +29,7 @@ fun JournalButton(onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(80.dp)
+            .height(90.dp)
             .scale(scale)
             .clickable(
                 onClick = {

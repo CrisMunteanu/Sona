@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.presentation.screens.buddhism
 
 import android.speech.tts.TextToSpeech
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -11,22 +12,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import de.syntax_institut.androidabschlussprojekt.data.repository.BuddhistTextRepository
+import org.koin.androidx.compose.koinViewModel
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BuddhistTextDetailScreen(
     textId: String,
-    navController: NavController
+    navController: NavController,
+    viewModel: BuddhistTextViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
-    var tts: TextToSpeech? = remember { null }
+    val currentLanguage by viewModel.currentLanguage.collectAsState()
+    val texts by viewModel.buddhistTexts.collectAsState()
+    val text = texts.firstOrNull { it.id == textId }
 
-    val currentLanguage = remember { BuddhistTextViewModel().currentLanguage.value }
-    val text = BuddhistTextRepository
-        .getTexts(currentLanguage)
-        .firstOrNull { it.id == textId }
+    var tts: TextToSpeech? by remember { mutableStateOf(null) }
+
+    DisposableEffect(context) {
+        val ttsInstance = TextToSpeech(context) {}
+        tts = ttsInstance
+        onDispose { ttsInstance.shutdown() }
+    }
 
     val flag = when (currentLanguage) {
         "de" -> "🇩🇪"
@@ -34,11 +41,6 @@ fun BuddhistTextDetailScreen(
         "fr" -> "🇫🇷"
         "es" -> "🇪🇸"
         else -> "🌐"
-    }
-
-    DisposableEffect(Unit) {
-        tts = TextToSpeech(context) {}
-        onDispose { tts?.shutdown() }
     }
 
     Scaffold(
@@ -65,7 +67,7 @@ fun BuddhistTextDetailScreen(
             )
         }
     ) { paddingValues ->
-        text?.let {
+        text?.let { prayer ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -73,7 +75,7 @@ fun BuddhistTextDetailScreen(
                     .padding(16.dp)
             ) {
                 Text(
-                    text = it.content,
+                    text = prayer.content,
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.weight(1f)
@@ -83,15 +85,24 @@ fun BuddhistTextDetailScreen(
 
                 Button(
                     onClick = {
-                        val locale = when (it.languageCode) {
-                            "de" -> Locale.GERMAN
-                            "en" -> Locale.ENGLISH
-                            "fr" -> Locale.FRENCH
-                            "es" -> Locale("es")
+                        val locale = when (prayer.languageCode) {
+                            "de" -> Locale("de", "DE")
+                            "en" -> Locale("en", "US")
+                            "fr" -> Locale("fr", "FR")
+                            "es" -> Locale("es", "ES")
                             else -> Locale.getDefault()
                         }
-                        tts?.language = locale
-                        tts?.speak(it.content, TextToSpeech.QUEUE_FLUSH, null, null)
+
+                        val result = tts?.setLanguage(locale)
+                        if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                            Toast.makeText(
+                                context,
+                                "❗ Sprache wird nicht unterstützt.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            tts?.speak(prayer.content, TextToSpeech.QUEUE_FLUSH, null, null)
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
@@ -107,8 +118,11 @@ fun BuddhistTextDetailScreen(
                 }
             }
         } ?: Text(
-            "❗ Gebet nicht gefunden.",
-            modifier = Modifier.padding(16.dp),
+            text = "❗ Gebet nicht gefunden.",
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp),
             color = MaterialTheme.colorScheme.error
         )
     }

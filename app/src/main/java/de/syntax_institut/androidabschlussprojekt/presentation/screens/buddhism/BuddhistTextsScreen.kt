@@ -9,13 +9,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.domain.model.BuddhistText
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun BuddhistTextsScreen(
     navController: NavController,
-    viewModel: BuddhistTextViewModel = viewModel()
+    viewModel: BuddhistTextViewModel = koinViewModel()
 ) {
     val languageCode by viewModel.currentLanguage.collectAsState()
     val texts by viewModel.buddhistTexts.collectAsState()
@@ -28,6 +28,8 @@ fun BuddhistTextsScreen(
     )
 
     var expanded by remember { mutableStateOf(false) }
+
+    val selectedLabel = languageOptions.firstOrNull { it.first == languageCode }?.second ?: languageCode
 
     Column(
         modifier = Modifier
@@ -44,8 +46,7 @@ fun BuddhistTextsScreen(
 
         Box {
             OutlinedButton(onClick = { expanded = true }) {
-                val selected = languageOptions.firstOrNull { it.first == languageCode }?.second ?: languageCode
-                Text(text = selected, color = MaterialTheme.colorScheme.onBackground)
+                Text(text = selectedLabel, color = MaterialTheme.colorScheme.onBackground)
             }
 
             DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
