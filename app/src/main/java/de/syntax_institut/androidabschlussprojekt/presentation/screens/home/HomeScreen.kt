@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import de.syntax_institut.androidabschlussprojekt.presentation.components.BreathingCard
+import de.syntax_institut.androidabschlussprojekt.presentation.components.BuddhistTextsCard
 import de.syntax_institut.androidabschlussprojekt.presentation.components.CosmicMeditationButton
 import de.syntax_institut.androidabschlussprojekt.presentation.components.MeditationCard
 import de.syntax_institut.androidabschlussprojekt.presentation.components.MoodSuggestionCard
@@ -65,12 +66,20 @@ fun HomeScreen(navController: NavController) {
             )
         }
 
-        // Zitate-Galerie (Card)
+        // Zitate-Galerie
         item {
             QuoteGalleryCard(
                 onClick = { navController.navigate("quotes") }
             )
         }
+
+        // Buddhistische Texte (NEU)
+        item {
+            BuddhistTextsCard {
+                navController.navigate("buddhist_texts")
+            }
+        }
+
 
         // Journal Button
         item {

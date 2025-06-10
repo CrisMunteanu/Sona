@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Radio
@@ -21,6 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
 
 @Composable
 fun YogaRadioCard(onClick: () -> Unit) {
@@ -28,8 +31,8 @@ fun YogaRadioCard(onClick: () -> Unit) {
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(120.dp),
-        colors = CardDefaults.cardColors(containerColor = ElegantRed.copy(alpha = 0.1f))
+            .height(100.dp),
+        colors = CardDefaults.cardColors(containerColor = VintageWhite)
     ) {
         Row(
             modifier = Modifier
@@ -46,7 +49,8 @@ fun YogaRadioCard(onClick: () -> Unit) {
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text("Yoga Radio", style = MaterialTheme.typography.titleMedium, color = ElegantRed)
-                Text("Live Meditationsmusik vom Webradio", style = MaterialTheme.typography.bodySmall)
+                Text("Live Meditationsmusik vom Webradio",
+                    style = MaterialTheme.typography.bodySmall , color = SoftPurple)
             }
         }
     }

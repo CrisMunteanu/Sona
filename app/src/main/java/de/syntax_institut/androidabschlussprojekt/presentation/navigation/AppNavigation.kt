@@ -34,6 +34,9 @@ import de.syntax_institut.androidabschlussprojekt.presentation.screens.nasa.Nasa
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.player.AudioPlayerOnlineScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.cosmic.CosmicMeditationScreen
 import de.syntax_institut.androidabschlussprojekt.presentation.screens.yogaradio.YogaRadioScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.buddhism.BuddhistTextsScreen
+import de.syntax_institut.androidabschlussprojekt.presentation.screens.buddhism.BuddhistTextDetailScreen
+
 
 @Composable
 fun AppNavigation(
@@ -187,6 +190,15 @@ fun AppNavigation(
         }
         composable("yoga_radio") {
             YogaRadioScreen()
+        }
+
+        composable("buddhist_texts") {
+            BuddhistTextsScreen(navController = navController)
+        }
+
+        composable("buddhist_detail/{id}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id") ?: ""
+            BuddhistTextDetailScreen(textId = id, navController = navController)
         }
 
     }

@@ -45,7 +45,7 @@ fun QuoteGalleryCard(onClick: () -> Unit) {
             Icon(
                 imageVector = Icons.Default.FormatQuote,
                 contentDescription = "Zitat Icon",
-                tint = ElegantRed, // jetzt ElegantRed!
+                tint = ElegantRed,
                 modifier = Modifier.size(36.dp)
             )
 
@@ -72,7 +72,7 @@ fun BreathingCard(onClick: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         onClick = onClick,
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFE0F7FA)),
+        colors = CardDefaults.cardColors(containerColor = VintageWhite),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         Row(

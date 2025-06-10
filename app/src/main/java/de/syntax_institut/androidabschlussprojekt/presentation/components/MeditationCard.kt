@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.domain.model.MeditationItem
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.NobleBlack
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
 
 @Composable
 fun MeditationCard(item: MeditationItem, onClick: () -> Unit) {
@@ -24,6 +25,8 @@ fun MeditationCard(item: MeditationItem, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() },
+        colors = CardDefaults.cardColors(
+            containerColor = VintageWhite),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(

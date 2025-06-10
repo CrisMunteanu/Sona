@@ -24,6 +24,7 @@ import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhit
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -51,7 +52,7 @@ fun YogaRadioScreen(viewModel: YogaRadioViewModel = koinViewModel()) {
         Text(
             text = if (isPlaying) "Yoga-Radio läuft 🎵" else "Bereit zum Abspielen",
             style = MaterialTheme.typography.headlineSmall,
-            color = NobleBlack
+            color = SoftPurple
         )
 
         Spacer(modifier = Modifier.height(24.dp))

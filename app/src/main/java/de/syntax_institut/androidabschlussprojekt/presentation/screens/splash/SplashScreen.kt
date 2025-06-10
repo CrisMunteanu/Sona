@@ -31,6 +31,7 @@ import de.syntax_institut.androidabschlussprojekt.data.local.SettingsDataStore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import de.syntax_institut.androidabschlussprojekt.BuildConfig
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.AppBackground
 
 @Composable
 fun SplashScreen(navController: NavController) {
@@ -68,7 +69,7 @@ fun SplashScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFAF4E6)),
+            .background(Color(0xFFF5F3EF)),
         contentAlignment = Alignment.Center
     ) {
         AnimatedVisibility(

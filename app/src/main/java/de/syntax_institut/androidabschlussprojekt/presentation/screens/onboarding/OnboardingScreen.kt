@@ -77,8 +77,10 @@ fun OnboardingScreen(
 
                 Text(
                     text = stringResource(id = item.title),
-                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 24.sp),
+                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 24.sp,
+                        color = MaterialTheme.colorScheme.primary),
                     textAlign = TextAlign.Center
+
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))

@@ -22,6 +22,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import de.syntax_institut.androidabschlussprojekt.data.local.entity.FavoriteQuoteEntity
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.OceanBlue
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.FavoriteQuoteViewModel
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MainViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -54,7 +55,7 @@ fun QuotesGalleryScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            // 🔘 NEUER BUTTON
+            //NEUER BUTTON
             Button(
                 onClick = { navController.navigate("favorite_quotes") },
                 modifier = Modifier
@@ -82,7 +83,7 @@ fun QuotesGalleryScreen(
                             .padding(horizontal = 4.dp),
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFFFFF8F3)
+                            containerColor = VintageWhite
                         ),
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 6.dp

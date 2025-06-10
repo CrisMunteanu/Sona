@@ -19,6 +19,7 @@ import de.syntax_institut.androidabschlussprojekt.domain.model.MeditationPose
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.NobleBlack
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.SoftPurple
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
 import mockMeditationPoses
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,6 +61,8 @@ fun PoseListItem(pose: MeditationPose, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() },
+        colors = CardDefaults.cardColors(
+            containerColor = VintageWhite),
         elevation = CardDefaults.cardElevation(6.dp)
     ) {
         Row(
