@@ -121,7 +121,7 @@ Die App ist auf **Offline-Nutzung optimiert** (kein Zwang zur Cloud), funktionie
 
 ###  API Calls
 
-| Meditationsmusik | [Pixabay Audio API](https://pixabay.com/api/docs/audio/) |
+| Meditationsmusik | [Chosic](chosic.com) |
 | Zitate (AudioPlayer) | [RealInspire API](https://api.realinspire.live) |
 | Zitate (Galerie) | [type.fit](https://type.fit/api/quotes) |
 | NASA-Bilder | [NASA APOD API](https://api.nasa.gov/) |
@@ -130,7 +130,7 @@ Die App ist auf **Offline-Nutzung optimiert** (kein Zwang zur Cloud), funktionie
 
 
 ##  Ausblick
-
+- online Meditationsmusik | [Pixabay Audio API](https://pixabay.com/api/docs/audio/)
 - [ ] Upload eigener Meditationen (nur lokal)
 - [ ] Veröffentlichung im Play Store
 
