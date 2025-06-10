@@ -26,7 +26,7 @@ Viele Meditations-Apps sind überladen, auf Abo-Modelle ausgerichtet oder setzen
 -  Hochwertige, freie Meditationsmusik lokal integriert (Chosic.com)
 -  Optionale tägliche Zitate aus einer API (Typefit API)
 -  Ästhetisches Design in beruhigenden Farben (Vintage White, Noble Red, Elegant Black)
--  Minimalistisch, leichtgewichtig, 100 Compose-basiert
+-  Minimalistisch, leichtgewichtig, 100 Compose-basiert.
 
 ## Design
 Füge hier am Ende die Screenshots deiner App ein.
