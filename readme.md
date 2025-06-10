@@ -40,26 +40,67 @@ Füge hier am Ende die Screenshots deiner App ein.
   <img src="./img/PosenScreen.png" width="200">
   <img src="./img/SettingsScreen.png" width="200"> 
   <img src="./img/MentalBenefits.png" width="200"> 
-  <img src="./img/HomeScreen.png.png" width="200"> 
+  <img src="./img/HomeScreen.png." width="200"> 
+<img src="./img/NasaScreeen.png" width="200"> 
 
 </p>
 
 ##  Features
 
-**Tipp:** Diese Liste wird regelmäßig erweitert und gepflegt.
+ **Meditationen**
+- Offline- und Online-Wiedergabe von Meditationsmusik (lokale MP3s & Pixabay Audio API)
+- Fortschrittsanzeige, Dauer & Scrubbing
+- Favoritenverwaltung mit Room (persistente Speicherung)
+- Kosmische Meditationen mit NASA-Bild des Tages (APOD API)
 
-- [x] Splashscreen mit animiertem Logo  
-- [x] Homescreen mit täglichen Empfehlungen  
-- [x] Navigationsstruktur mit BottomNavigation  
-- [x] Kategorien: Sleep, Focus, Breathe, Morning  
-- [x] Lokale Audio- und Bildintegration  
-- [x] Zitat des Tages über Typefit API  und zenQuotes public API
-- [ ] Favoritenfunktion mit DataStore oder Room  
-- [ ] Erinnerungsfunktion (optional)  
-- [ ] Offline-Download ganzer Playlists (optional)  
-- [ ] Profilverwaltung (optional)
+**Zitate**
+- Zufällige Zitate (RealInspire API) im Player
+- Zitate-Galerie (type.fit API) mit Autor-Detailansicht
+- Favoritenfunktion & Teilen von Zitaten
+- Zitate rotieren automatisch (per Timer oder Swipe)
+
+**Onboarding & Kategorien**
+- Mehrseitiges visuelles Onboarding mit Swipes
+- Kategorienstartseite mit Icons für Meditationen, Musik, Gebete, Journal, etc.
+
+**Journal**
+- Tagebuch mit Datum & Zeit
+- Kalender mit Markierung von Einträgen
+- Anzeige, Bearbeitung und Speicherung von Einträgen
+
+**Geführte Meditationen & Gebete**
+- Strukturierter Screen für gesprochene Meditationen
+- Buddhistisches Gebetsmodul (SuttaCentral API)
+- Texte mit Text-to-Speech, mehrsprachig (DE, EN, FR, ES)
+
+**Kosmische Funktionen**
+- NASA Picture of the Day (APOD)
+- Integration von Meditation + Bild + Textimpuls
+
+**Atemübungen**
+- Atembildschirm mit Sound, Schattenanimation & individueller Dauer
+- Integriert in den Meditationsbereich
+
+ **Benachrichtigungen**
+- Erinnerung an tägliche Meditation (mit Uhrzeit wählbar)
+- NotificationHelper & DataStore-Einstellungen
+
+**Lokalisierung & UI**
+- Live-Sprachwechsel (DE, EN, FR, ES) ohne Neustart
+- Kompletter Dark Mode Support
+- Alle Inhalte mehrsprachig gepflegt
+- Kompatibel ab Android API 21+
+
 
 ## ⚙️ Technischer Aufbau
+- Kotlin
+- Android Jetpack (Compose, ViewModel, Navigation)
+- Room, DataStore, Retrofit, Moshi
+- Koin Dependency Injection
+- Paging3 für Musikdaten
+- Coil für Bild-Loading
+- Text-to-Speech Integration
+
 
 ### Projektaufbau
 
@@ -80,30 +121,17 @@ Die App ist auf **Offline-Nutzung optimiert** (kein Zwang zur Cloud), funktionie
 
 ###  API Calls
 
-- **type.fit** → liefert inspirierende Tageszitate  
-  url("https://type.fit/api/quotes"
----
+| Meditationsmusik | [Pixabay Audio API](https://pixabay.com/api/docs/audio/) |
+| Zitate (AudioPlayer) | [RealInspire API](https://api.realinspire.live) |
+| Zitate (Galerie) | [type.fit](https://type.fit/api/quotes) |
+| NASA-Bilder | [NASA APOD API](https://api.nasa.gov/) |
+| Buddhistische Texte | [SuttaCentral API](https://suttacentral.net/api) |
 
-### 3rd-Party Frameworks
 
-Folgende Libraries werden eingesetzt:
-- **Jetpack Compose** (UI)
-- **Koin** (Dependency Injection)
-- **Retrofit + Moshi** (API)
-- **Room / DataStore** (optional für Speicherung)
-- **Coil** (optional für Bild-Handling)
-- **Accompanist** (Navigation-Animations, System UI)
-
----
 
 ##  Ausblick
 
-- [ ] Favoriten-Logik und lokale Speicherung
-- [ ] Erinnerungsfunktion per Notification
-- [ ] Vollständiger Dark Mode mit Dynamik
 - [ ] Upload eigener Meditationen (nur lokal)
-- [ ] Erweiterung um Atemübungen mit Animation
-- [ ] Lokalisierung (Mehrsprachigkeit)
 - [ ] Veröffentlichung im Play Store
 
 🧘 *Sona ist mehr als eine App – es ist eine kleine digitale Pause vom Lärm der Welt.*
