@@ -14,8 +14,8 @@ sealed class BottomNavItem(
     val label: String
 ) {
     object Home : BottomNavItem("home", Icons.Filled.Home, "Home")
-    object Favorites : BottomNavItem("favorites", Icons.Filled.Favorite, "Favoriten")
+    object Favorites : BottomNavItem("favorites", Icons.Filled.Favorite, "Favs")
     object Poses : BottomNavItem("pose_list", Icons.Filled.SelfImprovement, "Posen")
-    object Settings : BottomNavItem("settings", Icons.Filled.Settings, "Einstellungen")
+    object Settings : BottomNavItem("settings", Icons.Filled.Settings, "Set")
     object Nasa : BottomNavItem("nasa", Icons.Filled.Image, "NASA")
 }
