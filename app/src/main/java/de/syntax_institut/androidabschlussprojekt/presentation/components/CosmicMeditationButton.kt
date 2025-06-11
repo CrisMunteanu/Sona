@@ -21,6 +21,7 @@ import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
 import androidx.compose.material3.Icon
 
+
 @Composable
 fun CosmicMeditationButton(onClick: () -> Unit) {
     Button(

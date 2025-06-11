@@ -46,7 +46,7 @@ fun StartScreenCard(
         ) {
             Icon(
                 imageVector = Icons.Default.Explore,
-                contentDescription = "Zur Startansicht",
+                contentDescription = "Startansicht",
                 tint = ElegantRed,
                 modifier = Modifier.size(16.dp)
             )
@@ -54,7 +54,7 @@ fun StartScreenCard(
             Spacer(modifier = Modifier.width(8.dp))
 
             Text(
-                text = "Zur Startansicht",
+                text = "Startansicht",
                 style = MaterialTheme.typography.titleMedium,
                 color = NobleBlack
             )

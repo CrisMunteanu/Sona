@@ -2,9 +2,11 @@ package de.syntax_institut.androidabschlussprojekt.presentation.screens.start
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,6 +35,7 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.domain.model.MeditationItem
 import de.syntax_institut.androidabschlussprojekt.presentation.components.TodaySuggestionCard
 import de.syntax_institut.androidabschlussprojekt.presentation.theme.ElegantRed
+import de.syntax_institut.androidabschlussprojekt.presentation.theme.VintageWhite
 import de.syntax_institut.androidabschlussprojekt.presentation.viewmodel.MainViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -47,7 +50,7 @@ fun CategoryStartScreen(
         viewModel.loadDailyQuote()
     }
 
-    val allItems = viewModel.allItems
+    val allItems = viewModel.allItems.chunked(2) // je zwei Buttons pro Zeile
 
     Column(
         modifier = Modifier
@@ -68,41 +71,63 @@ fun CategoryStartScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        allItems.forEach { item ->
-            Button(
-                onClick = { onItemSelected(item) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp)
-                    .padding(vertical = 6.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp)
+        // Zwei Buttons pro Zeile
+        allItems.forEach { rowItems ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Image(
-                    painter = painterResource(id = item.imageResId),
-                    contentDescription = item.title,
-                    modifier = Modifier.size(20.dp)
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(
-                    text = item.title,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                rowItems.forEach { item ->
+                    Button(
+                        onClick = { onItemSelected(item) },
+                        shape = RoundedCornerShape(50),
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(52.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+                        contentPadding = PaddingValues(horizontal = 12.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = item.imageResId),
+                            contentDescription = item.title,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = item.title,
+                            style = MaterialTheme.typography.labelLarge
+                        )
+                    }
+                }
+                // Bei ungerader Anzahl: Platzhalter auffüllen
+                if (rowItems.size < 2) {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
             }
+            Spacer(modifier = Modifier.height(12.dp))
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
-
+        // Online-Meditationen Button (rund)
         Button(
             onClick = onPixabayClicked,
+            shape = RoundedCornerShape(50),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp)
-                .padding(vertical = 6.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = ElegantRed)
+                .height(52.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = ElegantRed),
+            contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
-            Icon(Icons.Default.Cloud, contentDescription = "Online Musik")
-            Spacer(modifier = Modifier.width(16.dp))
-            Text("🌐 Online-Meditationen")
+            Icon(
+                imageVector = Icons.Default.Cloud,
+                contentDescription = "Online Musik",
+                tint = VintageWhite
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Text(
+                text = "🌐 Online-Meditationen",
+                style = MaterialTheme.typography.labelLarge,
+                color = VintageWhite
+            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
