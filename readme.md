@@ -132,6 +132,6 @@ Die App ist auf **Offline-Nutzung optimiert** (kein Zwang zur Cloud), funktionie
 ##  Ausblick
 - online Meditationsmusik | [Pixabay Audio API](https://pixabay.com/api/docs/audio/)
 - [ ] Upload eigener Meditationen (nur lokal)
-- [ ] Veröffentlichung im Play Store
+- [ ] Veröffentlichung im Play Store.
 
 🧘 *Sona ist mehr als eine App – es ist eine kleine digitale Pause vom Lärm der Welt.*
