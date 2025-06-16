@@ -112,7 +112,7 @@ Aktuell speichert Sona:
 - Audiodateien (lokal im `res/raw/`)
 - Bilder (lokal im `res/drawable/`)
 - Struktur-JSON (`assets/meditations.json`)
-- Später: Favoriten via Room oder DataStore
+- Später: Favoriten via Room oder DataStore.
 
 📌 *Warum lokal?*  
 Die App ist auf **Offline-Nutzung optimiert** (kein Zwang zur Cloud), funktioniert stabil ohne Internet, ideal für Schüler*innen oder Fokuszeiten.
